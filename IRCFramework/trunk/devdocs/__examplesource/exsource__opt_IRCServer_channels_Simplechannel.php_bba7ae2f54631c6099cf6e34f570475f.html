@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>example</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><h1 align="center">example</h1>
+<div class="src-code">
+<div class="src-code"><ol><li><div class="src-line"><strong>&lt;?php</strong></div></li>
+<li><div class="src-line"><font color="#009999">/**</font></div></li>
+<li><div class="src-line"><font color="#009999">*&nbsp;This&nbsp;example&nbsp;class&nbsp;would&nbsp;join&nbsp;the&nbsp;channel&nbsp;#simplechannel&nbsp;and&nbsp;provide&nbsp;a&nbsp;few&nbsp;basic&nbsp;triggers</font></div></li>
+<li><div class="src-line"><font color="#009999">*</font></div></li>
+<li><div class="src-line"><font color="#009999">*&nbsp;</font><strong><font color = "#0099FF">@package</font></strong><font color="#009999">&nbsp;V7IRCFramework</font></div></li>
+<li><div class="src-line"><font color="#009999">*/</font></div></li>
+<li><div class="src-line"><font color="blue">class&nbsp;</font><a href="../V7IRCFramework/Simplechannel.html">Simplechannel</a>&nbsp;<font color="blue">extends&nbsp;</font><a href="../V7IRCFramework/IRCServerChannel.html">IRCServerChannel</a></div></li>
+<li><div class="src-line"><strong>{</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">public&nbsp;</font><font color="blue">function&nbsp;</font><a href="../V7IRCFramework/Simplechannel.html#methodevent_msg">event_msg</a><strong>(</strong><strong>$who</strong><strong>,&nbsp;</strong><strong>$message</strong><strong>)</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<strong>{</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>$message_parts&nbsp;</strong>=&nbsp;<a href="http://www.php.net/explode">explode</a><strong>(</strong><font color="#66cccc">'&nbsp;'</font><strong>,&nbsp;</strong><strong>$message</strong><strong>)</strong><strong>;</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">switch</font><strong>(</strong><strong>$message_parts</strong><strong>[</strong>0<strong>]</strong><strong>)</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>{</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;<font color="#66cccc">'!time'</font>:</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>$this</strong><strong>-&gt;</strong><a href="../V7IRCFramework/IRCServerChannel.html#methodsend_msg">send_msg</a><strong>(</strong><font color="#66cccc">'The&nbsp;current&nbsp;date&nbsp;&amp;&nbsp;time&nbsp;is&nbsp;'&nbsp;</font>.&nbsp;<a href="http://www.php.net/date">date</a><strong>(</strong><font color="#66cccc">'r'</font><strong>))</strong><strong>;</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break<strong>;</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;<font color="#66cccc">'!spin'</font>:</div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>$user&nbsp;</strong>=&nbsp;<strong>$this</strong><strong>-&gt;</strong><a href="../V7IRCFramework/IRCServerChannel.html#var$users">users</a><strong>[</strong><a href="http://www.php.net/array_rand">array_rand</a><strong>(</strong><strong>$this</strong><strong>-&gt;</strong><a href="../V7IRCFramework/IRCServerChannel.html#var$users">users</a><strong>)</strong><strong>]</strong><strong>;</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>$this</strong><strong>-&gt;</strong><a href="../V7IRCFramework/IRCServerChannel.html#methodsend_msg">send_msg</a><strong>(</strong><font color="#66cccc">&quot;</font>{<strong>$user</strong><strong>-&gt;</strong>nick<font color="#66cccc"><strong>}</strong>&nbsp;wins!</font><font color="#66cccc">&quot;</font><strong>)</strong><strong>;</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break<strong>;</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>}</strong></div></li>
+<li><div class="src-line">&nbsp;&nbsp;&nbsp;&nbsp;<strong>}</strong></div></li>
+<li><div class="src-line"><strong>}</strong></div></li>
+</ol></div>
+</div>
+	<div id="credit">
+		<hr />
+		Documentation generated on Thu, 03 Sep 2009 22:22:18 +1000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</div>
+</body>
+</html>

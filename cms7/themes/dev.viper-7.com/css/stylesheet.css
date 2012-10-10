@@ -1,0 +1,22 @@
+@CHARSET "ISO-8859-1";
+
+html,body {
+	background-color: #fff;
+	color: #000;
+}
+
+div#page_container {
+}
+
+div.block {
+}
+
+div.block.header {
+		padding-top: 20px;
+}
+
+div.block.content {
+}
+
+div.block.footer {
+}

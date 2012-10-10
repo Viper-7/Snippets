@@ -1,0 +1,57 @@
+body {
+	margin: 0 0;
+	background-color: #001144;
+}
+
+div.body {
+	margin: 0 auto;
+	width: 720px;
+	background-color: #FFFFFF;
+	padding: 15px;
+	padding-top: 0px;
+	padding-bottom: 80px;
+}
+
+div.editbody {
+	margin: 0 auto;
+	width: 800px;
+	background-color: #FFFFFF;
+	padding: 10px;
+	padding-top: 0px;
+}
+
+table.center {
+	margin: 0 auto;
+	min-width: 200px;
+}
+
+p.center {
+	margin: 0 auto;
+	min-width: 200px;
+	text-align: center;
+}
+
+table.vcenter {
+	position: absolute;
+	top: 40%;
+	width: 100%;
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+td.center {
+	text-align: center; 
+}
+
+td.left {
+	text-align: left; 
+}
+
+td.right {
+	text-align: right; 
+}
+
+a {
+	color: #000000;
+	text-decoration: none;
+}

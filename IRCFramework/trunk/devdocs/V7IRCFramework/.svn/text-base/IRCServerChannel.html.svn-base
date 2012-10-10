@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs For Class IRCServerChannel</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><!-- Start of Class Data -->
+<h2>
+	Class IRCServerChannel
+</h2> (line <span class="linenumber">13</span>)
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ));
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<pre>
+</pre>
+<p>
+	<b><i>Located in File: <a href="_lib---IRCServerChannel.php.html">/lib/IRCServerChannel.php</a></i></b><br>
+</p>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>IRC Channel</h5>
+<div class="desc"><p>Represents a channel that the bot is currently inside.  Holds information about the channel itself and the users inside</p></div>
+<ul>
+		<li><strong>author:</strong> - Viper-7</li>
+	</ul>
+<br /><hr />
+<span class="type">Classes extended from IRCServerChannel:</span>
+ 		<dl>
+	<dt><a href="../V7IRCFramework/Simplechannel.html">Simplechannel</a></dt>
+		<dd>This example class would join the channel #simplechannel and provide a few basic triggers</dd>
+	</dl>
+	</p>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+
+<h2 class="tab">Class Variables</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="var-title">
+    static <span class="var-type">Array</span>
+    <a href="#var$channels" title="details" class="property"><strong>$channels</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$channel" title="details" class="property"><strong>$channel</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">mixed</span>
+    <a href="#var$modes" title="details" class="property"><strong>$modes</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">mixed</span>
+    <a href="#var$names" title="details" class="property"><strong>$names</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">mixed</span>
+    <a href="#var$nick" title="details" class="property"><strong>$nick</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Boolean</span>
+    <a href="#var$online" title="details" class="property"><strong>$online</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type"><a href="../V7IRCFramework/IRCServerConnection.html">IRCServerConnection</a></span>
+    <a href="#var$server" title="details" class="property"><strong>$server</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">mixed</span>
+    <a href="#var$template" title="details" class="property"><strong>$template</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$topic" title="details" class="property"><strong>$topic</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Array</span>
+    <a href="#var$users" title="details" class="property"><strong>$users</strong></a>
+</div>
+<hr />
+<a name="var$channels" id="var$channels"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">static $channels</strong> (line <span class="linenumber">20</span>)
+ </h4>
+<h4>Data type : Array</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Array of open IRCServerChannel objects indexed by channel name</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$channel" id="var$channel"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$channel</strong> (line <span class="linenumber">27</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>This channel's name</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$modes" id="var$modes"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$modes</strong> (line <span class="linenumber">41</span>)
+ </h4>
+<h4>Data type : mixed</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The current channel modes</h5>
+<div class="desc"><p>$var String</p></div>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$names" id="var$names"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$names = array()</strong> (line <span class="linenumber">65</span>)
+ </h4>
+<h4>Data type : mixed</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>System variable to hold the partial contents of a NAMES response</h5>
+<ul>
+		<li><strong>access:</strong> - private</li>
+	</ul>
+</div>
+<a name="var$nick" id="var$nick"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$nick</strong> (line <span class="linenumber">60</span>)
+ </h4>
+<h4>Data type : mixed</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The bots current nickname</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$online" id="var$online"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$online</strong> (line <span class="linenumber">55</span>)
+ </h4>
+<h4>Data type : Boolean</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Flag to tell if we're currently in the channel</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$server" id="var$server"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$server</strong> (line <span class="linenumber">77</span>)
+ </h4>
+<h4>Data type : <a href="../V7IRCFramework/IRCServerConnection.html">IRCServerConnection</a></h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Reference to the current server object</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$template" id="var$template"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$template</strong> (line <span class="linenumber">70</span>)
+ </h4>
+<h4>Data type : mixed</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>String templating engine</h5>
+<ul>
+		<li><strong>access:</strong> - protected</li>
+	</ul>
+</div>
+<a name="var$topic" id="var$topic"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$topic</strong> (line <span class="linenumber">48</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The current channel topic</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$users" id="var$users"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$users</strong> (line <span class="linenumber">34</span>)
+ </h4>
+<h4>Data type : Array</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Array of IRCServerUsers occupying this channel</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+</div>
+<div class="tab-page" id="constantsTabpage">
+
+<h2 class="tab">Class Constants</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<hr />
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "constantsTabpage" ) );</script>
+</div>
+<div class="tab-page" id="tabPage2">
+<h2 class="tab">Method Detail</h2>
+<!-- ============ METHOD DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="method-summary">
+    <div class="method-definition">
+    static         <span class="method-result"><a href="../V7IRCFramework/IRCServerChannel.html">IRCServerChannel</a></span>
+        <a href="#methodgetChannel" title="details" class="method-name">getChannel</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$channel</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">IRCServerChannel</span>
+        <a href="#method__construct" title="details" class="method-name">__construct</a>
+        (<span class="var-type"></span>&nbsp;<span class="var-name">$channel</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodadd_modes" title="details" class="method-name">add_modes</a>
+        (<span class="var-type"></span>&nbsp;<span class="var-name">$newmodes</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_join" title="details" class="method-name">event_join</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_joined" title="details" class="method-name">event_joined</a>
+        ()
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_kick" title="details" class="method-name">event_kick</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$victim</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_kicked" title="details" class="method-name">event_kicked</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$why</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_mode" title="details" class="method-name">event_mode</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$modes</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_msg" title="details" class="method-name">event_msg</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_names" title="details" class="method-name">event_names</a>
+        (<span class="var-type"></span>&nbsp;<span class="var-name">$users</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_names_end" title="details" class="method-name">event_names_end</a>
+        ()
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_notice" title="details" class="method-name">event_notice</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_part" title="details" class="method-name">event_part</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_quit" title="details" class="method-name">event_quit</a>
+        (<span class="var-type"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>&nbsp;<span class="var-name">$who</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodkick_user" title="details" class="method-name">kick_user</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$nick</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodpoll" title="details" class="method-name">poll</a>
+        (<span class="var-type"></span>&nbsp;<span class="var-name">$cycle</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodsend_msg" title="details" class="method-name">send_msg</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+</div>
+<hr />
+<A NAME='method_detail'></A>
+
+
+<a name="methodgetChannel" id="methodgetChannel"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Static Method getChannel</strong> (line <span class="linenumber">104</span>)
+ </h4> 
+<h4><i><a href="../V7IRCFramework/IRCServerChannel.html">IRCServerChannel</a></i> <strong>getChannel(
+string
+$channel)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Gets or creates an IRCServerChannel object of the supplied channel name</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $channel</strong>: Channel name (Including the #)</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="method__construct" id="method__construct"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/Constructor.gif" border="0" /> <strong class="method">Constructor __construct</strong> (line <span class="linenumber">79</span>)
+ </h4> 
+<h4><i>IRCServerChannel</i> <strong>__construct(
+
+$channel)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong> $channel</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - private</li>
+		</ul>
+</div>
+<a name="methodadd_modes" id="methodadd_modes"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method add_modes</strong> (line <span class="linenumber">141</span>)
+ </h4> 
+<h4><i>void</i> <strong>add_modes(
+
+$newmodes)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Adds or Removes modes that have been set on the channel</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong> $newmodes</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_join" id="methodevent_join"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_join</strong> (line <span class="linenumber">203</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_join(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when someone joins</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who joined</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_joined" id="methodevent_joined"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_joined</strong> (line <span class="linenumber">149</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_joined(
+)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when joining the channel</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_kick" id="methodevent_kick"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_kick</strong> (line <span class="linenumber">236</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_kick(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who, String
+$message, String
+$victim)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when someone gets kicked</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who did the kick</li>
+			<li><strong>String $message</strong>: Reason they gave</li>
+			<li><strong>String $victim</strong>: Person who got kicked</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_kicked" id="methodevent_kicked"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_kicked</strong> (line <span class="linenumber">160</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_kicked(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who, String
+$why)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when the bot is kicked</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who kicked the bot</li>
+			<li><strong>String $why</strong>: The reason they gave</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_mode" id="methodevent_mode"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_mode</strong> (line <span class="linenumber">171</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_mode(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who, String
+$modes)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when the channel modes are changed</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who changed the mode</li>
+			<li><strong>String $modes</strong>: The new channel modes</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_msg" id="methodevent_msg"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_msg</strong> (line <span class="linenumber">193</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_msg(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who, String
+$message)</strong></h4>
+	<p>Overridden in child classes as:<br />
+		<dl>
+	<dt><a href="../V7IRCFramework/Simplechannel.html#methodevent_msg">Simplechannel::event_msg()</a></dt>
+		<dd></dd>
+	</dl>
+	</p>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when someone speaks in the channel</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who spoke</li>
+			<li><strong>String $message</strong>: What they said</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_names" id="methodevent_names"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_names</strong> (line <span class="linenumber">247</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_names(
+
+$users)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>System Event raised when joining a channel  Used to populate the user list for the channel</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong> $users</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_names_end" id="methodevent_names_end"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_names_end</strong> (line <span class="linenumber">258</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_names_end(
+)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>System Event raised when joining a channel  Processes the user list into user objects</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_notice" id="methodevent_notice"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_notice</strong> (line <span class="linenumber">182</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_notice(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who, String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when someone sends a notice to the channel</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who send the notice</li>
+			<li><strong>String $message</strong>: The notice message</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_part" id="methodevent_part"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_part</strong> (line <span class="linenumber">213</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_part(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when someone leaves</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who left</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodevent_quit" id="methodevent_quit"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_quit</strong> (line <span class="linenumber">224</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_quit(
+<a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a>
+$who, String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Event raised when someone quits</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a> $who</strong>: Person who left</li>
+			<li><strong>String $message</strong>: Quit message</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodkick_user" id="methodkick_user"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method kick_user</strong> (line <span class="linenumber">131</span>)
+ </h4> 
+<h4><i>void</i> <strong>kick_user(
+String
+$nick, String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Kick a person from the channel</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $nick</strong>: Nickname of the user to kick</li>
+			<li><strong>String $message</strong>: Reason to give</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodpoll" id="methodpoll"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method poll</strong> (line <span class="linenumber">93</span>)
+ </h4> 
+<h4><i>void</i> <strong>poll(
+
+$cycle)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Called for every cycle of the bot's processing loop.</h5>
+<div class="desc"><p>Once per second, and once per line of text received</p><p>$param Int Number of cycles since startup</p></div>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong> $cycle</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodsend_msg" id="methodsend_msg"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method send_msg</strong> (line <span class="linenumber">120</span>)
+ </h4> 
+<h4><i>void</i> <strong>send_msg(
+String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Send a message in the channel</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $message</strong>: Message to send</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script></div>
+<div class="tab-page" id="iVars">
+<h2 class="tab">Inherited Variables</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iVars" ) );</script>
+<!-- =========== VAR INHERITED SUMMARY =========== -->
+<A NAME='var_inherited_summary'><!-- --></A>
+<h3>Inherited Class Variable Summary</h3>
+
+	</div>
+<div class="tab-page" id="iMethods">
+<h2 class="tab">Inherited Methods</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iMethods" ) );</script>
+<!-- =========== INHERITED METHOD SUMMARY =========== -->
+<A NAME='functions_inherited'><!-- --></A>
+<h3>Inherited Method Summary</h3>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Thu, 03 Sep 2009 22:22:18 +1000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</div>
+</body>
+</html>

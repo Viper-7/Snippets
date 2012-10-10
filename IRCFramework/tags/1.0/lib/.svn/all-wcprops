@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/projects/!svn/ver/2614/IRCFramework/tags/1.0/lib
+END
+Bootstrap.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/projects/!svn/ver/2614/IRCFramework/tags/1.0/lib/Bootstrap.php
+END
+IRCServerChannel.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/projects/!svn/ver/2614/IRCFramework/tags/1.0/lib/IRCServerChannel.php
+END
+StringTemplate.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/projects/!svn/ver/2614/IRCFramework/tags/1.0/lib/StringTemplate.php
+END
+IRCServerException.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/projects/!svn/ver/2614/IRCFramework/tags/1.0/lib/IRCServerException.php
+END
+IRCServerUser.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/projects/!svn/ver/2614/IRCFramework/tags/1.0/lib/IRCServerUser.php
+END
+IRCServerConnection.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/projects/!svn/ver/2614/IRCFramework/tags/1.0/lib/IRCServerConnection.php
+END

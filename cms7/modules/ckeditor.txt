@@ -1,0 +1,4 @@
+		echo '<form>';
+		$CKEditor = new CKEditor();
+		$CKEditor->editor("editor1", '<p>This is some <strong>sample text</strong>.</p>');
+		echo '</form>';

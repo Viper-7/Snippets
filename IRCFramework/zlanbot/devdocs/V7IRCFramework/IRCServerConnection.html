@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs For Class IRCServerConnection</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><!-- Start of Class Data -->
+<h2>
+	Class IRCServerConnection
+</h2> (line <span class="linenumber">12</span>)
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ));
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<pre>
+</pre>
+<p>
+	<b><i>Located in File: <a href="_lib---IRCServerConnection.php.html">/lib/IRCServerConnection.php</a></i></b><br>
+</p>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>IRC Server Connection Class</h5>
+<ul>
+		<li><strong>author:</strong> - Viper-7</li>
+		<li><strong>example:</strong> - <a href="../__examplesource/exsource__opt_IRCServer_channels_Simplechannel.php_bba7ae2f54631c6099cf6e34f570475f.html">example</a></li>
+	</ul>
+<br /><hr />
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+
+<h2 class="tab">Class Variables</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="var-title">
+    static <span class="var-type">mixed</span>
+    <a href="#var$server_connection" title="details" class="property"><strong>$server_connection</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Boolean</span>
+    <a href="#var$authenticated" title="details" class="property"><strong>$authenticated</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Array</span>
+    <a href="#var$buffer" title="details" class="property"><strong>$buffer</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Resource</span>
+    <a href="#var$conn" title="details" class="property"><strong>$conn</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Boolean</span>
+    <a href="#var$connected" title="details" class="property"><strong>$connected</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Int</span>
+    <a href="#var$cycles" title="details" class="property"><strong>$cycles</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Boolean</span>
+    <a href="#var$debug" title="details" class="property"><strong>$debug</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">mixed</span>
+    <a href="#var$lastjoin" title="details" class="property"><strong>$lastjoin</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">mixed</span>
+    <a href="#var$lastping" title="details" class="property"><strong>$lastping</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Object</span>
+    <a href="#var$messageHandler" title="details" class="property"><strong>$messageHandler</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$nick" title="details" class="property"><strong>$nick</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Boolean</span>
+    <a href="#var$online" title="details" class="property"><strong>$online</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Int</span>
+    <a href="#var$pollInterval" title="details" class="property"><strong>$pollInterval</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Int</span>
+    <a href="#var$port" title="details" class="property"><strong>$port</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$server" title="details" class="property"><strong>$server</strong></a>
+</div>
+<hr />
+<a name="var$server_connection" id="var$server_connection"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">static $server_connection</strong> (line <span class="linenumber">17</span>)
+ </h4>
+<h4>Data type : mixed</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Static reference to the connection object</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$authenticated" id="var$authenticated"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$authenticated</strong> (line <span class="linenumber">67</span>)
+ </h4>
+<h4>Data type : Boolean</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Flag to send identification information on connection</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$buffer" id="var$buffer"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$buffer</strong> (line <span class="linenumber">32</span>)
+ </h4>
+<h4>Data type : Array</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The output buffer for outbound data  FIFO Stack held in memory</h5>
+<ul>
+		<li><strong>access:</strong> - private</li>
+	</ul>
+</div>
+<a name="var$conn" id="var$conn"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$conn</strong> (line <span class="linenumber">24</span>)
+ </h4>
+<h4>Data type : Resource</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The active connection handle to the server</h5>
+<ul>
+		<li><strong>access:</strong> - private</li>
+	</ul>
+</div>
+<a name="var$connected" id="var$connected"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$connected</strong> (line <span class="linenumber">60</span>)
+ </h4>
+<h4>Data type : Boolean</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Flag to allow connection and polling</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$cycles" id="var$cycles"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$cycles</strong> (line <span class="linenumber">102</span>)
+ </h4>
+<h4>Data type : Int</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Cycles since startup</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$debug" id="var$debug"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$debug</strong> (line <span class="linenumber">95</span>)
+ </h4>
+<h4>Data type : Boolean</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Flag to control dumping of debugging information to the console</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$lastjoin" id="var$lastjoin"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$lastjoin =  0</strong> (line <span class="linenumber">109</span>)
+ </h4>
+<h4>Data type : mixed</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<ul>
+		<li><strong>access:</strong> - private</li>
+	</ul>
+</div>
+<a name="var$lastping" id="var$lastping"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$lastping =  PHP_INT_MAX</strong> (line <span class="linenumber">107</span>)
+ </h4>
+<h4>Data type : mixed</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Tracks the last time the bot was pinged, to reconnect if everything else fails</h5>
+<ul>
+		<li><strong>access:</strong> - private</li>
+	</ul>
+</div>
+<a name="var$messageHandler" id="var$messageHandler"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$messageHandler</strong> (line <span class="linenumber">81</span>)
+ </h4>
+<h4>Data type : Object</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Object to pass messages to</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$nick" id="var$nick"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$nick</strong> (line <span class="linenumber">53</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The bot's current Nickname</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$online" id="var$online"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$online</strong> (line <span class="linenumber">74</span>)
+ </h4>
+<h4>Data type : Boolean</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Flag to tell if we're 100% online and ready to roll</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$pollInterval" id="var$pollInterval"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$pollInterval =  1</strong> (line <span class="linenumber">88</span>)
+ </h4>
+<h4>Data type : Int</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Time to wait between polls</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$port" id="var$port"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$port</strong> (line <span class="linenumber">46</span>)
+ </h4>
+<h4>Data type : Int</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The currently connected server's port</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$server" id="var$server"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$server</strong> (line <span class="linenumber">39</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>The currently connected server</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+</div>
+<div class="tab-page" id="constantsTabpage">
+
+<h2 class="tab">Class Constants</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<hr />
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "constantsTabpage" ) );</script>
+</div>
+<div class="tab-page" id="tabPage2">
+<h2 class="tab">Method Detail</h2>
+<!-- ============ METHOD DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="method-summary">
+    <div class="method-definition">
+    static         <span class="method-result">void</span>
+        <a href="#methoddestroy" title="details" class="method-name">destroy</a>
+        ()
+        </div>
+    <div class="method-definition">
+            <span class="method-result">IRCServerConnection</span>
+        <a href="#method__construct" title="details" class="method-name">__construct</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$server</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$port</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$nickname</span>, <span class="var-type">Array</span>&nbsp;<span class="var-name">$channels</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$debug</span> = <span class="var-default">FALSE</span>])
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodconnect" title="details" class="method-name">connect</a>
+        (<span class="var-type"></span>&nbsp;<span class="var-name">$channels</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodprocessIncoming" title="details" class="method-name">processIncoming</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodsendCTCP" title="details" class="method-name">sendCTCP</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$dest</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodsend_immediate" title="details" class="method-name">send_immediate</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodsend_line" title="details" class="method-name">send_line</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodsend_msg" title="details" class="method-name">send_msg</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$dest</span>, <span class="var-type">String</span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodserverLoop" title="details" class="method-name">serverLoop</a>
+        ()
+        </div>
+</div>
+<hr />
+<A NAME='method_detail'></A>
+
+
+<a name="methoddestroy" id="methoddestroy"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Static Method destroy</strong> (line <span class="linenumber">176</span>)
+ </h4> 
+<h4><i>void</i> <strong>destroy(
+)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="method__construct" id="method__construct"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/Constructor.gif" border="0" /> <strong class="method">Constructor __construct</strong> (line <span class="linenumber">119</span>)
+ </h4> 
+<h4><i>IRCServerConnection</i> <strong>__construct(
+String
+$server, String
+$port, String
+$nickname, Array
+$channels, [
+$debug = FALSE])</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Creates a new outbound buffer resource and connects to the server</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $server</strong>: Server to connect to</li>
+			<li><strong>String $port</strong>: Port to connect to</li>
+			<li><strong>String $nickname</strong>: Nickname to use</li>
+			<li><strong>Array $channels</strong>: List of channels to join</li>
+			<li><strong> $debug</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodconnect" id="methodconnect"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method connect</strong> (line <span class="linenumber">149</span>)
+ </h4> 
+<h4><i>void</i> <strong>connect(
+
+$channels)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>(re)Connects to the server</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong> $channels</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - private</li>
+		</ul>
+</div>
+<a name="methodprocessIncoming" id="methodprocessIncoming"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method processIncoming</strong> (line <span class="linenumber">200</span>)
+ </h4> 
+<h4><i>void</i> <strong>processIncoming(
+string
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Process an incoming message</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string $message</strong>: Raw line from the server</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - private</li>
+		</ul>
+</div>
+<a name="methodsendCTCP" id="methodsendCTCP"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method sendCTCP</strong> (line <span class="linenumber">497</span>)
+ </h4> 
+<h4><i>void</i> <strong>sendCTCP(
+String
+$dest, String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Send a CTCP message to a channel or user</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $dest</strong>: Destination user or channel for the CTCP message</li>
+			<li><strong>String $message</strong>: The message itself</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodsend_immediate" id="methodsend_immediate"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method send_immediate</strong> (line <span class="linenumber">444</span>)
+ </h4> 
+<h4><i>void</i> <strong>send_immediate(
+String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Send a line to the server without using the message buffer</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $message</strong>: The line of text to send to the server</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodsend_line" id="methodsend_line"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method send_line</strong> (line <span class="linenumber">465</span>)
+ </h4> 
+<h4><i>void</i> <strong>send_line(
+String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Send a line to the server</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $message</strong>: The line of text to send to the server</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodsend_msg" id="methodsend_msg"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method send_msg</strong> (line <span class="linenumber">482</span>)
+ </h4> 
+<h4><i>void</i> <strong>send_msg(
+String
+$dest, String
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Send a message to a channel or user</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $dest</strong>: Destination user or channel for the message</li>
+			<li><strong>String $message</strong>: The message itself</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodserverLoop" id="methodserverLoop"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method serverLoop</strong> (line <span class="linenumber">331</span>)
+ </h4> 
+<h4><i>void</i> <strong>serverLoop(
+)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Primary server loop</h5>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - private</li>
+		</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script></div>
+<div class="tab-page" id="iVars">
+<h2 class="tab">Inherited Variables</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iVars" ) );</script>
+<!-- =========== VAR INHERITED SUMMARY =========== -->
+<A NAME='var_inherited_summary'><!-- --></A>
+<h3>Inherited Class Variable Summary</h3>
+
+	</div>
+<div class="tab-page" id="iMethods">
+<h2 class="tab">Inherited Methods</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iMethods" ) );</script>
+<!-- =========== INHERITED METHOD SUMMARY =========== -->
+<A NAME='functions_inherited'><!-- --></A>
+<h3>Inherited Method Summary</h3>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Thu, 03 Sep 2009 22:22:18 +1000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</div>
+</body>
+</html>

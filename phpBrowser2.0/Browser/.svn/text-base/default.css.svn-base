@@ -1,0 +1,103 @@
+p, li, div{
+	color : #666666;
+	font-family : Arial, verdana, Geneva,  Helvetica, sans-serif;
+	font-size: 8pt;
+}
+a{
+	color:#003366;
+	text-decoration:none;
+}
+
+a:visited {color: #9E0000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+}
+a:hover{
+	color:#2EA300;
+}
+a:active{
+
+}
+a.nav{
+	text-decoration:none;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:8pt;
+}
+.body{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:8pt;
+	color:#676767;
+}
+.bodyHD{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:12pt;
+	color:#676767;
+}
+.copyright{
+	color : #636363;
+	background-color : transparent;	
+	font-family : verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 7pt;
+}
+.dmsmallheaderstyle{
+	color : #003366;
+	background-color : transparent;
+	font-family : Arial, verdana, Geneva, Helvetica, sans-serif;
+	font-size: 8pt;
+}
+a.dmsmallheaderstylewhite{
+	color : #FFFFFF;
+	background-color : transparent;
+	font-family : Arial, verdana, Geneva, Helvetica, sans-serif;
+	font-size: 10pt;
+
+}	
+.dmsmallstyle{
+	color : #666666;
+	background-color : transparent;
+	font-family : Arial, verdana, Geneva,  Helvetica, sans-serif;
+	font-size: 8pt;
+}	
+.letterspacing{
+	letter-spacing : 10px;
+}
+.italic{
+	font-style : italic;
+}
+.capitalize{
+	text-transform : capitalize;
+}
+.uppercase{
+	text-transform : uppercase;
+}
+.lowercase{
+	text-transform : lowercase;
+}
+.link {
+	color: #000072;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+
+}
+a:link {
+	color: #000072;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+
+
+}
+a.linkwhite{
+	color:000072;
+	text-decoration:none;
+}
+a.dmsmallheaderstylewhite{
+	color : #FFFFFF;
+	background-color : transparent;
+	font-family : Arial, verdana, Geneva, Helvetica, sans-serif;
+	font-size: 8pt;
+}
+.bgimage {
+	background-image: url(images/type_field1.jpg);
+	background-repeat: repeat-x;
+}

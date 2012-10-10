@@ -1,0 +1,29 @@
+html,body {
+	background-color: #000;
+	color: #FFF;
+}
+
+div#page_container {
+}
+
+div.block {
+}
+
+div.block.header {
+		padding-top: 20px;
+}
+
+div.block.content {
+	background-color: #000720;
+	border: 1px solid #03F;
+}
+
+div.block.footer {
+}
+div.utilitybar {
+	background-color: #000720;
+	border: 1px solid #03F;
+}
+div.utilitybar a {
+	color: #99C;
+}

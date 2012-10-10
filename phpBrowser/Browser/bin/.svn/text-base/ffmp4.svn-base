@@ -1,0 +1,2 @@
+#!/bin/bash
+ffmpeg -title "$3" -i "$1" -s "$2" -f 3gp -acodec libamr_nb -b 64k -ac 1 -ab 10.2k -ar 8000 "$3" >"$4" 2>"$4" &

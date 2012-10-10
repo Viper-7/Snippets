@@ -1,0 +1,88 @@
+html,body {
+	background-color: #FFF;
+	color: #000;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+img {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+div#page_container {
+	width: 960px;
+	height: 100%;
+	margin: 0px auto;
+}
+
+div.block {
+	font-family: 'Helvetica';
+}
+
+div.block.header {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	text-align: center;
+	position: relative;
+}
+
+div.block.content {
+	width: 90%;
+	border: 1px solid #666;
+	min-height: 70%;
+	margin: 0px auto;
+	padding: 5px;
+}
+
+div.block.footer {
+	width: 100%;
+	margin-top: 10px;
+	text-align: center;
+	font-size-adjust: -1;
+}
+p.cms7.poweredby {
+	font-size: 10px;
+}
+p.cms7.poweredby a {
+	color: #66A;
+	text-decoration: none;
+}
+
+div.debug.header {
+	margin: 0px auto; 
+	padding: 2px; 
+	width: 100%; 
+	background-color: rgb(204, 204, 204); 
+	color: rgb(0, 0, 0); 
+	text-align: center;
+	margin-top: 50px;
+}
+div.utilitybar {
+	width: 90%;
+	margin: 0 auto;
+	padding: 5px;
+	line-height: 14pt;
+	font-family: 'Helvetica';
+	font-size: 11pt;
+	height: 21px;
+	vertical-align: middle;
+	border: 1px solid #666;
+	margin-bottom: 10px;
+}
+div.utilitybar a {
+	text-decoration: none;	
+}
+form.utilitybar.search {
+	text-align: right;
+	margin-bottom: 10px;
+}
+form.utilitybar.search input {
+	vertical-align: middle;
+}

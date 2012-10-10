@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /opt/mediacache
+MP4Box -hint -3gp $*
+sleep 3
+mv $* ./publish/
+sleep 1

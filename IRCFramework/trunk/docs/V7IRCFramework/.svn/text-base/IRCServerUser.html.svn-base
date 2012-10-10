@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs For Class IRCServerUser</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><!-- Start of Class Data -->
+<h2>
+	Class IRCServerUser
+</h2> (line <span class="linenumber">13</span>)
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ));
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<pre>
+</pre>
+<p>
+	<b><i>Located in File: <a href="_lib---IRCServerUser.php.html">/lib/IRCServerUser.php</a></i></b><br>
+</p>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>IRC User</h5>
+<div class="desc"><p>Represents a user in a channel that the bot  Holds information about a specific user</p></div>
+<ul>
+		<li><strong>author:</strong> - Viper-7</li>
+	</ul>
+<br /><hr />
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+
+<h2 class="tab">Class Variables</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="var-title">
+    static <span class="var-type">Array</span>
+    <a href="#var$users" title="details" class="property"><strong>$users</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Array</span>
+    <a href="#var$channels" title="details" class="property"><strong>$channels</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$host" title="details" class="property"><strong>$host</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$ident" title="details" class="property"><strong>$ident</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">Int</span>
+    <a href="#var$last_activity" title="details" class="property"><strong>$last_activity</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$mode" title="details" class="property"><strong>$mode</strong></a>
+</div>
+<div class="var-title">
+    <span class="var-type">String</span>
+    <a href="#var$nick" title="details" class="property"><strong>$nick</strong></a>
+</div>
+<hr />
+<a name="var$users" id="var$users"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">static $users</strong> (line <span class="linenumber">20</span>)
+ </h4>
+<h4>Data type : Array</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Array of IRCServerUser objects of known users indexed by nickname</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$channels" id="var$channels"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$channels</strong> (line <span class="linenumber">55</span>)
+ </h4>
+<h4>Data type : Array</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Array of IRCServerChannels this user is currently occupying</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$host" id="var$host"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$host</strong> (line <span class="linenumber">41</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>User's hostname</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$ident" id="var$ident"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$ident</strong> (line <span class="linenumber">34</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>User's ident</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$last_activity" id="var$last_activity"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$last_activity</strong> (line <span class="linenumber">62</span>)
+ </h4>
+<h4>Data type : Int</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>Timestamp of the last user activity</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$mode" id="var$mode"><!-- --></A>
+<div style="background='#ffffff'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$mode</strong> (line <span class="linenumber">48</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>User's mode (@ = op, % = halfop, + = voice)</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<a name="var$nick" id="var$nick"><!-- --></A>
+<div style="background='#eeeeee'">
+<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /> <strong class="property">$nick</strong> (line <span class="linenumber">27</span>)
+ </h4>
+<h4>Data type : String</h4>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>User's nickname</h5>
+<ul>
+		<li><strong>access:</strong> - public</li>
+	</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+</div>
+<div class="tab-page" id="constantsTabpage">
+
+<h2 class="tab">Class Constants</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<hr />
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "constantsTabpage" ) );</script>
+</div>
+<div class="tab-page" id="tabPage2">
+<h2 class="tab">Method Detail</h2>
+<!-- ============ METHOD DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="method-summary">
+    <div class="method-definition">
+    static         <span class="method-result">Array</span>
+        <a href="#methoddecodeHostmask" title="details" class="method-name">decodeHostmask</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$host</span>)
+        </div>
+    <div class="method-definition">
+    static         <span class="method-result"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>
+        <a href="#methodgetByHostmask" title="details" class="method-name">getByHostmask</a>
+        (<span class="var-type">String</span>&nbsp;<span class="var-name">$host</span>, [<span class="var-type">Boolean</span>&nbsp;<span class="var-name">$channel</span> = <span class="var-default">''</span>])
+        </div>
+    <div class="method-definition">
+    static         <span class="method-result"><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></span>
+        <a href="#methodgetUser" title="details" class="method-name">getUser</a>
+        (<span class="var-type">string</span>&nbsp;<span class="var-name">$nick</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$channel</span> = <span class="var-default">''</span>], <span class="var-type">string</span>&nbsp;<span class="var-name">2</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">3</span>)
+        </div>
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodsend_msg" title="details" class="method-name">send_msg</a>
+        (<span class="var-type"></span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+</div>
+<hr />
+<A NAME='method_detail'></A>
+
+
+<a name="methoddecodeHostmask" id="methoddecodeHostmask"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Static Method decodeHostmask</strong> (line <span class="linenumber">118</span>)
+ </h4> 
+<h4><i>Array</i> <strong>decodeHostmask(
+String
+$host)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Decodes a users hostmask into nick, ident, host &amp; mode</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $host</strong>: User's hostmask</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodgetByHostmask" id="methodgetByHostmask"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Static Method getByHostmask</strong> (line <span class="linenumber">88</span>)
+ </h4> 
+<h4><i><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></i> <strong>getByHostmask(
+String
+$host, [Boolean
+$channel = ''])</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Creates an IRCServerUser object from the specified hostmask</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>String $host</strong>: Hostmask to lookup</li>
+			<li><strong>Boolean $channel</strong>: Should this user be cached?</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodgetUser" id="methodgetUser"><!-- --></a>
+<div style="background='#ffffff'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Static Method getUser</strong> (line <span class="linenumber">139</span>)
+ </h4> 
+<h4><i><a href="../V7IRCFramework/IRCServerUser.html">IRCServerUser</a></i> <strong>getUser(
+string
+$nick, [string
+$channel = ''], string
+2, string
+3)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<h5>Gets or creates an IRCServerUser object of the supplied name</h5>
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong>string 2</strong>: User's hostname</li>
+			<li><strong>string 3</strong>: Channel to add the user to</li>
+			<li><strong>string $nick</strong>: User's nickname</li>
+			<li><strong>string $channel</strong>: User's ident</li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<a name="methodsend_msg" id="methodsend_msg"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method send_msg</strong> (line <span class="linenumber">150</span>)
+ </h4> 
+<h4><i>void</i> <strong>send_msg(
+
+$message)</strong></h4>
+
+	<!-- ========== Info from phpDoc block ========= -->
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong> $message</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script></div>
+<div class="tab-page" id="iVars">
+<h2 class="tab">Inherited Variables</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iVars" ) );</script>
+<!-- =========== VAR INHERITED SUMMARY =========== -->
+<A NAME='var_inherited_summary'><!-- --></A>
+<h3>Inherited Class Variable Summary</h3>
+
+	</div>
+<div class="tab-page" id="iMethods">
+<h2 class="tab">Inherited Methods</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iMethods" ) );</script>
+<!-- =========== INHERITED METHOD SUMMARY =========== -->
+<A NAME='functions_inherited'><!-- --></A>
+<h3>Inherited Method Summary</h3>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Thu, 03 Sep 2009 22:22:17 +1000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</div>
+</body>
+</html>

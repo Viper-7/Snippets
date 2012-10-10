@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+   <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Docs For Class Simplechannel</title>
+  <link rel="stylesheet" href="../media/stylesheet.css" />
+  <script src="../media/lib/classTree.js"></script>
+<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="../media/lib/tab.webfx.css" />
+<script type="text/javascript" src="../media/lib/tabpane.js"></script>
+  <script language="javascript" type="text/javascript" src="../media/lib/ua.js"></script>
+<script language="javascript" type="text/javascript">
+	var imgPlus = new Image();
+	var imgMinus = new Image();
+	imgPlus.src = "../media/images/plus.gif";
+	imgMinus.src = "../media/images/minus.gif";
+	
+	function showNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgMinus.src;
+		oTable.style.display = "block";
+	}
+	
+	function hideNode(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+				var oImg = document.layers["img" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+				var oImg = document.all["img" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+				var oImg = document.getElementById("img" + Node);
+        		break;
+        }
+		oImg.src = imgPlus.src;
+		oTable.style.display = "none";
+	}
+	
+	function nodeIsVisible(Node){
+        switch(navigator.family){
+        	case 'nn4':
+        		// Nav 4.x code fork...
+				var oTable = document.layers["span" + Node];
+        		break;
+        	case 'ie4':
+        		// IE 4/5 code fork...
+				var oTable = document.all["span" + Node];
+        		break;
+        	case 'gecko':
+        		// Standards Compliant code fork...
+				var oTable = document.getElementById("span" + Node);
+        		break;
+        }
+		return (oTable && oTable.style.display == "block");
+	}
+	
+	function toggleNodeVisibility(Node){
+		if (nodeIsVisible(Node)){
+			hideNode(Node);
+		}else{
+			showNode(Node);
+		}
+	}
+</script>
+<!-- template designed by Julien Damon based on PHPEdit's generated templates, and tweaked by Greg Beaver -->
+<body bgcolor="#ffffff" ><!-- Start of Class Data -->
+<h2>
+	Class Simplechannel
+</h2> (line <span class="linenumber">7</span>)
+<div class="tab-pane" id="tabPane1">
+<script type="text/javascript">
+tp1 = new WebFXTabPane( document.getElementById( "tabPane1" ));
+</script>
+
+<div class="tab-page" id="Description">
+<h2 class="tab">Description</h2>
+<pre>
+<a href="../V7IRCFramework/IRCServerChannel.html">IRCServerChannel</a>
+   |
+   --Simplechannel</pre>
+<p>
+	<b><i>Located in File: <a href="_channels---Simplechannel.php.html">/channels/Simplechannel.php</a></i></b><br>
+</p>
+<!-- ========== Info from phpDoc block ========= -->
+<h5>This example class would join the channel #simplechannel and provide a few basic triggers</h5>
+<ul>
+		<li><strong>author:</strong> - Viper-7</li>
+	</ul>
+<br /><hr />
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "Description" ) );</script>
+<div class="tab-page" id="tabPage1">
+
+<h2 class="tab">Class Variables</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<hr />
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage1" ) );</script>
+</div>
+<div class="tab-page" id="constantsTabpage">
+
+<h2 class="tab">Class Constants</h2>
+<!-- ============ VARIABLE DETAIL =========== -->
+<strong>Summary:</strong><br />
+<hr />
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "constantsTabpage" ) );</script>
+</div>
+<div class="tab-page" id="tabPage2">
+<h2 class="tab">Method Detail</h2>
+<!-- ============ METHOD DETAIL =========== -->
+<strong>Summary:</strong><br />
+<div class="method-summary">
+    <div class="method-definition">
+            <span class="method-result">void</span>
+        <a href="#methodevent_msg" title="details" class="method-name">event_msg</a>
+        (<span class="var-type"></span>&nbsp;<span class="var-name">$who</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$message</span>)
+        </div>
+</div>
+<hr />
+<A NAME='method_detail'></A>
+
+
+<a name="methodevent_msg" id="methodevent_msg"><!-- --></a>
+<div style="background='#eeeeee'"><h4>
+<img src="../media/images/PublicMethod.gif" border="0" /> <strong class="method">Method event_msg</strong> (line <span class="linenumber">9</span>)
+ </h4> 
+<h4><i>void</i> <strong>event_msg(
+
+$who, 
+$message)</strong></h4>
+
+<p><strong>Overrides :</strong> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_msg">IRCServerChannel::event_msg()</a> Event raised when someone speaks in the channel</p>
+	<!-- ========== Info from phpDoc block ========= -->
+		<h4>Parameters</h4>
+	<ul>
+			<li><strong> $who</strong>: </li>
+			<li><strong> $message</strong>: </li>
+		</ul>
+		
+	<h4>Info</h4>
+	<ul>
+			<li><strong>access</strong> - public</li>
+		</ul>
+</div>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "tabPage2" ) );</script></div>
+<div class="tab-page" id="iVars">
+<h2 class="tab">Inherited Variables</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iVars" ) );</script>
+<!-- =========== VAR INHERITED SUMMARY =========== -->
+<A NAME='var_inherited_summary'><!-- --></A>
+<h3>Inherited Class Variable Summary</h3>
+
+		<!-- =========== Summary =========== -->
+	<h4>Inherited From Class <a href="../V7IRCFramework/IRCServerChannel.html">IRCServerChannel</a></h4>
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$channel">IRCServerChannel::$channel</a></strong> - This channel's name
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$channels">IRCServerChannel::$channels</a></strong> - Array of open IRCServerChannel objects indexed by channel name
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$modes">IRCServerChannel::$modes</a></strong> - The current channel modes
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$names">IRCServerChannel::$names</a></strong> - System variable to hold the partial contents of a NAMES response
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$nick">IRCServerChannel::$nick</a></strong> - The bots current nickname
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$online">IRCServerChannel::$online</a></strong> - Flag to tell if we're currently in the channel
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$server">IRCServerChannel::$server</a></strong> - Reference to the current server object
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$template">IRCServerChannel::$template</a></strong> - String templating engine
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$topic">IRCServerChannel::$topic</a></strong> - The current channel topic
+	</h4> 
+		<h4>
+<img src="../media/images/PublicProperty.gif" border="0" /><strong class="property"> <a href="../V7IRCFramework/IRCServerChannel.html#var$users">IRCServerChannel::$users</a></strong> - Array of IRCServerUsers occupying this channel
+	</h4> 
+		</div>
+<div class="tab-page" id="iMethods">
+<h2 class="tab">Inherited Methods</h2>
+<script type="text/javascript">tp1.addTabPage( document.getElementById( "iMethods" ) );</script>
+<!-- =========== INHERITED METHOD SUMMARY =========== -->
+<A NAME='functions_inherited'><!-- --></A>
+<h3>Inherited Method Summary</h3>
+
+		<!-- =========== Summary =========== -->
+	<h4>Inherited From Class <a href="../V7IRCFramework/IRCServerChannel.html">IRCServerChannel</a></h4>
+				<h4>
+<img src="../media/images/Constructor.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#method__construct">IRCServerChannel::__construct()</a></strong> - 
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodadd_modes">IRCServerChannel::add_modes()</a></strong> - Adds or Removes modes that have been set on the channel
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_join">IRCServerChannel::event_join()</a></strong> - Event raised when someone joins
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_joined">IRCServerChannel::event_joined()</a></strong> - Event raised when joining the channel
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_kick">IRCServerChannel::event_kick()</a></strong> - Event raised when someone gets kicked
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_kicked">IRCServerChannel::event_kicked()</a></strong> - Event raised when the bot is kicked
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_mode">IRCServerChannel::event_mode()</a></strong> - Event raised when the channel modes are changed
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_msg">IRCServerChannel::event_msg()</a></strong> - Event raised when someone speaks in the channel
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_names">IRCServerChannel::event_names()</a></strong> - System Event raised when joining a channel  Used to populate the user list for the channel
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_names_end">IRCServerChannel::event_names_end()</a></strong> - System Event raised when joining a channel  Processes the user list into user objects
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_notice">IRCServerChannel::event_notice()</a></strong> - Event raised when someone sends a notice to the channel
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_part">IRCServerChannel::event_part()</a></strong> - Event raised when someone leaves
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodevent_quit">IRCServerChannel::event_quit()</a></strong> - Event raised when someone quits
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodgetChannel">IRCServerChannel::getChannel()</a></strong> - Gets or creates an IRCServerChannel object of the supplied channel name
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodkick_user">IRCServerChannel::kick_user()</a></strong> - Kick a person from the channel
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodpoll">IRCServerChannel::poll()</a></strong> - Called for every cycle of the bot's processing loop.
+		</h4> 
+
+				<h4>
+<img src="../media/images/PublicMethod.gif" border="0" /><strong class="method"> <a href="../V7IRCFramework/IRCServerChannel.html#methodsend_msg">IRCServerChannel::send_msg()</a></strong> - Send a message in the channel
+		</h4> 
+
+				<br />
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+setupAllTabs();
+
+//]]>
+</script>
+	<div id="credit">
+		<hr />
+		Documentation generated on Thu, 03 Sep 2009 22:22:18 +1000 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.2</a>
+	</div>
+</body>
+</html>

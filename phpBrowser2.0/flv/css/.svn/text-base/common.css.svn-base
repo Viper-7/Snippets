@@ -1,0 +1,33 @@
+
+body {
+	background-color:#050608;	
+	font-family:"trebuchet ms", verdana, "bitstream vera sans";
+	padding:0;
+	margin:0;
+	text-align:center;
+}
+
+h1 {
+	font-size:22px;
+	letter-spacing:-1px;
+	color:#0d7b7a;
+	font-weight:normal;
+}
+
+h1 em {
+	font-style:normal;
+	color:darkorange;	
+}
+
+
+h2 {
+	font-size:18px;
+	font-weight:normal;
+}
+
+
+.less {
+	color:#999;
+	font-size:12px;
+}
+

@@ -1,0 +1,3 @@
+#!/bin/bash
+ffmpeg -title "$3" -i "$1" -s "$2" -f flv -vcodec flv -b 640k -ac 2 -ab 128k -ar 44100 "$3" >"$4" 2>"$4" &
+

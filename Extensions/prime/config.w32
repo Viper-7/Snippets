@@ -1,0 +1,13 @@
+// $Id$
+// vim:ft=javascript
+
+// If your extension references something external, use ARG_WITH
+// ARG_WITH("prime", "for prime support", "no");
+
+// Otherwise, use ARG_ENABLE
+// ARG_ENABLE("prime", "enable prime support", "no");
+
+if (PHP_prime != "no") {
+	EXTENSION("prime", "prime.c");
+}
+
