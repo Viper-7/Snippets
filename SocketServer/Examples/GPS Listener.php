@@ -1,4 +1,6 @@
 <?php
+include 'SocketServer.php';
+
 class GPS_Listener extends SocketListener {
 	public function processData($client, $data) {
 		switch($data[0]) {
@@ -12,3 +14,11 @@ class GPS_Listener extends SocketListener {
 		}
 	}
 }
+
+$server = new SocketServer();
+$id1 = $server->open(8001);
+
+$listener = new GPS_Listener();
+$server->addListener($listener);
+
+while($server->run()) {}
