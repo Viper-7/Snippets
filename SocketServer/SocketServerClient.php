@@ -4,15 +4,14 @@
 *
 * Provides convenience methods to respond to the client or force a disconnection.
 **/
-class SocketServerClient {
+class SocketServerClient implements ISocketServerClient {
 	protected static $clients = array();
 
 	protected $clientID;
 	protected $server;
-	protected $input_buffer;
-	protected $tag
+	protected $serverID;
+	protected $tag;
 	
-
 	/**
 	* Fetches the Unique Identifier assigned to this client
 	**/
@@ -21,7 +20,7 @@ class SocketServerClient {
 	}
 	
 	/**
-	* Set a user defined tag for this client, can be used to track the username, ID, etc 
+	* Sets a user defined tag for this client, can be used to track the username, ID, etc 
 	* of the remote client.
 	*
 	* $param string Tag value to assign
@@ -31,21 +30,25 @@ class SocketServerClient {
 	}
 	
 	/**
-	* Retrieve the user defined tag value for this client
+	* Retrieves the user defined tag value for this client
 	**/
 	public function getTag() {
 		return $this->tag;
 	}
 	
 	/**
-	* Retrieve the Hostname (or IP) of the client
+	* Retrieves the Hostname (or IP) of the client
 	**/
 	public function getIP() {
 		return $this->server->getIP($this->clientID);
 	}
 	
+	public function getServerID() {
+		return $this->serverID;
+	}
+	
 	/**
-	* Sends a message to the client
+	* Sends a message to a client, via the output buffer
 	*
 	* @param string Data to send
 	**/
@@ -60,16 +63,24 @@ class SocketServerClient {
 		$this->server->disconnectClient($this->clientID);
 	}
 
+	/**
+	* Broadcasts a message to all clients *EXCEPT* this one
+	**/
+	public function broadcast($data, $serverID = NULL) {
+		$this->server->broadcast($data, $serverID, $this->clientID);
+	}
 	
 	/**
 	* Handles the connection of a new client
 	*
 	* @param string Unique Identifier for this client
 	* @param SocketServer Server instance to which this client is attached
+	* @param string Server Identifier
 	**/
-	public function __construct($clientID, $server) {
+	public function __construct($clientID, $server, $serverID) {
 		$this->clientID = $clientID;
 		$this->server = $server;
+		$this->serverID = $serverID;
 		
 		self::$clients[$clientID] = $this;
 	}
@@ -80,6 +91,5 @@ class SocketServerClient {
 	* @param string Data received
 	**/
 	public function recvData($data) {
-		$this->input_buffer = $data;
 	}
 }

@@ -1,57 +1,38 @@
 <?php
+include_once 'ISocketListener.php';
+include_once 'ISocketServerClient.php';
+
+include_once 'SocketListener.php';
+include_once 'SocketServerClient.php';
+
 class SocketServer {
+	protected $delimiters;
+	protected $bindip = '0.0.0.0';
+	protected $selectTime = 10000;
 
-	/** 
-	* An array of 'End Of Data' markers for a complete request, this will vary depending on your protocol.
-	* If your protocol does not provide an EOD or EOF token, set this to your line ending.
-	**/
-	protected $delimiters = array("\xFF", "\r\n\r\n");
-	
-	/**
-	* The maximum size of a single chunk of data to read. These chunks will be combined into 
-	* a complete request for processing.
-	*
-	* Lower sizes mean better concurrency, Higher sizes mean faster transfers.
-	* The optimum value should be your network MTU - 1492 for many DSL connections, 1500 for ethernet
-	**/
-	public $packetSize = 1500;
-	
-	/**
-	* The time (in microseconds) to wait for data from existing connections before checking for new 
-	* connections and polling listeners for events. 
-	* 
-	* Higher values mean lower CPU usage, but slower response times to new clients.
-	*
-	* The default of 10000 (10ms) should handle most cases. This value should NOT significantly impact
-	* concurrency.
-	*/
-	public $selectTime = 10000;
-
-	public $connections = array();
-	public $inputBuffer = array();
-	public $outputBuffer = array();
+	protected $servers = array();
+	protected $connections = array();
+	protected $inputBuffer = array();
+	protected $outputBuffer = array();
 	
 	protected $clientIPs = array();
+	protected $serverIDs = array();
 	protected $lastPoll = array();
 	protected $disconnectQueue = array();
 	protected $listeners = array();
-	protected $socket;
 	
-	protected $port = '8000';
-	protected $bindip = '0.0.0.0';
-
 	/**
 	* Attach an object that implements ISocketListener to handle events for this server.
 	*
 	* @param ISocketListener Object to handle socket events
 	**/
-	public function addListener($listener) {
+	public function addListener($listener, $serverID = '*') {
 		if(!($listener instanceof ISocketListener))
 			trigger_error('Listener ' . get_class($listener) . ' is not an ISocketListener', E_USER_NOTICE);
 
 		$listener->setServer($this);
 		
-		$this->listeners[] = $listener;
+		$this->listeners[$serverID][] = $listener;
 	}
 
 	/**
@@ -76,9 +57,22 @@ class SocketServer {
 	*
 	* @param string Data to send
 	**/
-	public function broadcast($data) {
-		foreach($this->connections as $clientID => $socket) {
-			$this->sendData($clientID, $data);
+	public function broadcast($data, $serverID = null, $exceptClientID = null) {
+		if(!is_array($exceptClientID))
+			$exceptClientID = array($exceptClientID);
+		
+		if($serverID) {
+			foreach($this->serverIDs as $clientID => $clientSID) {
+				if($clientSID == $serverID) {
+					if(!in_array($clientID, $exceptClientID))
+						$this->sendData($clientID, $data);
+				}
+			}
+		} else { 
+			foreach($this->connections as $clientID => $socket) {
+				if(!in_array($clientID, $exceptClientID))
+					$this->sendData($clientID, $data);
+			}
 		}
 	}
 	
@@ -101,59 +95,82 @@ class SocketServer {
 	* @param string Client Identifier
 	**/
 	protected function readData($clientID) {
-		$stream = $this->connections[$clientID];
-		if(!$stream || feof($stream))
+		if(isset($this->connections[$clientID])) {
+			$stream = $this->connections[$clientID];
+		}
+		
+		if(empty($stream) || feof($stream))
 			return $this->disconnectClient($clientID);
 		
-		$line = fread($stream, $this->packetSize);
+		$line = fread($stream, 4096);
 
-		if($line !== FALSE && $line !== '') {
-		
-			$this->inputBuffer[$clientID] .= $line;
-			
-			foreach($this->delimiters as $delim) {
-				if(strpos($this->inputBuffer[$clientID], $delim) !== FALSE) {
-					list($content, $this->inputBuffer[$clientID]) = explode($delim, $this->inputBuffer[$clientID], 2) + array('', '');
-					
-					foreach($this->listeners as $listener) {
-						$listener->recvData($clientID, $content);
+		if($line !== FALSE) {
+			if($this->delimiters) { 
+				$this->inputBuffer[$clientID] .= $line;
+				
+				foreach($this->delimiters as $delim) {
+					if(strpos($this->inputBuffer[$clientID], $delim) !== FALSE) {
+						list($content, $this->inputBuffer[$clientID]) = explode($delim, $this->inputBuffer[$clientID], 2) + array('', '');
+						
+						break;
 					}
-					
-					break;
+				}
+			} else {
+				$content = $line;
+			}
+			
+			$serverID = $this->serverIDs[$clientID];
+			
+			if(isset($this->listeners[$serverID])) {
+				foreach($this->listeners[$serverID] as $listener) {
+					$listener->recvData($clientID, $content, $serverID);
 				}
 			}
+			
+			if(isset($this->listeners['*'])) {
+				foreach($this->listeners['*'] as $listener) {
+					$listener->recvData($clientID, $content, $serverID);
+				}
+			}
+
 		}
 	}
 	
 	/**
 	* Returns the numbers of current connections
-	*/
+	**/
 	public function connectionCount() {
-		return count($this->connections);
+		return array_sum(array_map('count', $this->connections));
+	}
+	
+	public function setDelimiters($delimiters) {
+		if(!is_array($delimiters))
+			$delimiters = array($delimiters);
+			
+		$this->delimiters = $delimiters;
 	}
 
 	/**
 	* Creates a SocketServer on a specific IP and Port.
 	*
 	* @param int Port to bind to
-	* @param string IP address to bind to (use 0.0.0.0 for all)
-	* @param array End of Data marker(s) for the target protocol (see: $delimiters)
+	* @param string IP address to bind to (use NULL for all)
 	**/
-	public function __construct($port = NULL, $bindip = NULL, $delimiters = NULL) {
-		if($port)
-			$this->port = $port;
-		
-		if($bindip)
-			$this->bindip = $bindip;
+	public function open($port = NULL, $bindip = NULL) {
+		if(!$bindip)
+			$bindip = $this->bindip;
 			
-		if($delimiters)
-			$this->delimiters = $delimiters;
+		$socket = stream_socket_server("tcp://{$bindip}:{$port}", $errno, $errstr);
 		
-		$this->socket = stream_socket_server("tcp://{$this->bindip}:{$this->port}", $errno, $errstr);
-		
-		if(!$this->socket) {
+		if(!$socket) {
 			trigger_error('Failed to create socket: ' . $errstr, E_USER_ERROR);
 		}
+		
+		$serverID = "{$bindip}:{$port}";
+		
+		$this->servers[$serverID] = $socket;
+		
+		return $serverID;
 	}
 	
 	/**
@@ -163,36 +180,45 @@ class SocketServer {
 	
 		$start = floor(microtime(true) * 1000);
 		
-		/**
-		* Accept new connections, generating a unique Client ID for each
-		**/
-		while($conn = @stream_socket_accept($this->socket, 0, $clientIP)) {
-			$clientID = hash('sha1', uniqid('', true));
-			
-			stream_set_blocking($conn, 0);
-			$this->connections[$clientID] = $conn;
-			$this->clientIPs[$clientID] = $clientIP;
-			$this->inputBuffer[$clientID] = '';
-			
-			foreach($this->listeners as $listener) {
-				$listener->connectClient($clientID);
-			}
-		}
+		$clients = $this->connections ?: array();
 		
-		if(!empty($this->connections)) {
-			$read = $this->connections;
-			$write = array();
-			$except = array();
-			
-			$start = floor(microtime(true) * 1000);
-			
-			/**
-			* Process incoming data from connected clients
-			**/
-			if(@stream_select($read, $write, $except, 0, $this->selectTime)) {
-				foreach($read as $stream) {
-					$clientID = array_search($stream, $this->connections);
+		$read = array_merge($this->servers, $clients);
+
+		$write = array();
+		$except = array();
+		
+		/**
+		* Process incoming data from connected clients
+		**/
+		if(stream_select($read, $write, $except, 0, $this->selectTime)) {
+			foreach($read as $socket) {
+				$serverID = array_search($socket, $this->servers);
+				if($serverID !== FALSE) {
+					$stream = stream_socket_accept($socket, 0, $clientIP);
+
+					$clientID = hash('sha1', uniqid('', true));
 					
+					$this->connections[$clientID] = $stream;
+					$this->serverIDs[$clientID] = $serverID;
+					$this->clientIPs[$clientID] = $clientIP;
+					$this->inputBuffer[$clientID] = '';
+					
+
+					if(isset($this->listeners[$serverID])) {
+						foreach($this->listeners[$serverID] as $listener) {
+							$listener->connectClient($clientID, $serverID);
+						}
+					}
+					
+					if(isset($this->listeners['*'])) {
+						foreach($this->listeners['*'] as $listener) {
+							$listener->connectClient($clientID, $serverID);
+						}
+					}
+				}
+			
+				$clientID = array_search($socket, $this->connections);
+				if($clientID !== FALSE) {
 					$this->readData($clientID);
 				}
 			}
@@ -200,9 +226,7 @@ class SocketServer {
 			/**
 			* Process output buffers and send data to clients.
 			**/
-			foreach($this->connections as $connection) {
-				$clientID = array_search($connection, $this->connections);
-				
+			foreach($this->connections as $clientID => $connection) {
 				if(!$connection)
 					$this->disconnectClient($clientID);
 				
@@ -217,17 +241,18 @@ class SocketServer {
 					}
 				}
 			}
-		} else {
-			usleep($this->selectTime);
 		}
 
 		/**
 		* Poll listeners to allow them to run any global tasks
 		**/
-		foreach($this->listeners as $index => $listener) {
-			if(!isset($this->lastPoll[$index]) || $this->lastPoll[$index] + $listener->pollFrequency < $start) {
-				$this->lastPoll[$index] = $start;
-				$listener->poll();
+		foreach($this->listeners as $x => $pool) {
+			foreach($pool as $y => $listener) {
+				$index = "{$x}:{$y}";
+				if(!isset($this->lastPoll[$index]) || $this->lastPoll[$index] + $listener->pollFrequency < $start) {
+					$this->lastPoll[$index] = $start;
+					$listener->poll();
+				}
 			}
 		}
 
@@ -239,11 +264,23 @@ class SocketServer {
 			$this->disconnectQueue = array_flip(array_unique($this->disconnectQueue));
 			foreach($this->connections as $clientID => $socket) {
 				if(!$socket || isset($this->disconnectQueue[$clientID])) {
-					foreach($this->listeners as $listener) {
-						$listener->disconnectClient($clientID);
+				
+					$serverID = $this->serverIDs[$clientID];
+
+					if(isset($this->listeners[$serverID])) {
+						foreach($this->listeners[$serverID] as $listener) {
+							$listener->disconnectClient($clientID);
+						}
 					}
 					
+					if(isset($this->listeners['*'])) {
+						foreach($this->listeners['*'] as $listener) {
+							$listener->disconnectClient($clientID);
+						}
+					}
+				
 					@fclose($this->connections[$clientID]);
+					unset($this->serverIDs[$clientID]);
 					unset($this->connections[$clientID]);
 					unset($this->clientIPs[$clientID]);
 				}
