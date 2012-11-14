@@ -48,8 +48,8 @@ class TimeSpan {
 	* Formats any number of seconds into a readable string
 	*
 	* @param int Seconds to format
-	* @param string Seperator to use between divisors
 	* @param int Number of divisors to return, ie (3) gives '1 Year, 3 Days, 9 Hours' whereas (2) gives '1 Year, 3 Days'
+	* @param string Seperator to use between divisors
 	* @param array Set of Name => Seconds pairs to use as divisors, ie array('Year' => 31536000)
 	* @return string Formatted interval
 	*/
