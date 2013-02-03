@@ -53,9 +53,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 
 				// Generate the height of the thumbnail based on the selected 
 				// width & image aspect ratio
-				if($oldheight > 1 && $oldwidth > 1) {
-					$newheight = ($oldheight / $oldwidth) * $newwidth;
-				}
+				$newheight = ($oldheight / $oldwidth) * $newwidth;
 				
 				// If the generated height is larger than specified, limit to
 				// the specified height and generate the width instead
@@ -68,8 +66,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 				$image_o = imagecreatetruecolor($newwidth, $newheight);
 				
 				// Load the image from disk, using imagecreatefromstring to auto-detect the filetype
-				$image_i = @file_get_contents($image);
-				$image_i = @imagecreatefromstring($image_i);
+				$image_i = file_get_contents($image);
+				$image_i = imagecreatefromstring($image_i);
 				
 				if(is_resource($image_i)) {
 					// Resize the image to the generated size
