@@ -84,8 +84,11 @@
 			// Loop over the array of rows
 			foreach($rows as $row) {
 
+				// Convert the barcode from plain text to HTML code, to prevent HTML injection
+				$barcode = htmlentities($row['Barcode']);
+				
 				// Output each barcode as a list item
-				echo "<li>{$row['Barcode']}</li>";
+				echo "<li>$barcode</li>";
 
 			}
 		?>
