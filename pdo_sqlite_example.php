@@ -20,7 +20,7 @@
 		$stmt = $db->prepare('INSERT INTO Barcodes (Barcode) VALUES (:barcode)');
 
 		// Execute the statement using the submitted barcode
-		$stmt->execute(array($_POST['barcode']));
+		$stmt->execute($_POST);
 
 		// Output the saved barcode to show in response
 		echo htmlentities($_POST['barcode']);
