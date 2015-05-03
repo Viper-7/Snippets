@@ -12,7 +12,7 @@ $filter = $path = null;
 $onlydirs = $onlyfiles = false;
 
 // Decode the command line arguments
-$opts = getopt('hmrcnzfdvxb:a:', array('help'));
+$opts = getopt('hmrcszfdvxb:a:', array('help'));
 
 // Parse the path component from the command line too
 $extras = array();
@@ -49,12 +49,12 @@ if(isset($opts['help']) || isset($opts['h'])) {
 	echo "Recursively lists files and folders which have status change times within a specified window\n";
 	echo "\n";
 	echo "\n";
-	echo "Usage: lsat [-mrcnzfdvxh] [-bN] [-aN] <path>\n";
+	echo "Usage: lsat [-mrcszfdvxh] [-bN] [-aN] <path>\n";
 	echo "\n";
 	echo "-m  \t\tFilter by last modified time (default)\n";
 	echo "-r  \t\tFilter by last accessed time\n";
 	echo "-c  \t\tFilter by inode change time\n";
-	echo "-n  \t\tDon't sort the results\n";
+	echo "-s  \t\tSort the results\n";
 	echo "-z  \t\tReverse sorting order\n";
 	echo "-f  \t\tFilter to show files only\n";
 	echo "-d  \t\tFilter to show folders only\n";
@@ -105,10 +105,14 @@ if(isset($opts['a'])) {
 }
 
 // Sort if required
-if(isset($opts['n']))
-	$folder->setSort(null);
+if(isset($opts['s']))
+	$folder->setSort(true);
 
-if(isset($opts['v'])) {
+if(isset($opts['z']))
+	$folder->setReverseSort(true);
+
+// Verbose mode with sorting shows the parsing process as it goes
+if(isset($opts['v']) && (!isset($opts['z']) && !isset($opts['s']))) {
 	$folder->setScanCallback(function($path) {
 		if(substr($path, 0, 2) == './') $path = substr($path, 2);
 		$path = preg_replace('/[^a-zA-Z0-9_\.\/-]+/', '', $path);
@@ -120,14 +124,6 @@ if(isset($opts['v'])) {
 // Fetch the file list
 $files = $folder->listAt($ts);
 
-// If no files were found, clear the output and end
-if(!$files) {
-	if(isset($opts['v']))
-		echo "\r" . str_repeat(' ', 90) . "\r";
-	
-	die();
-}
-
 // Filter to files
 if(isset($opts['f']))
 	$onlyfiles = true;
@@ -136,12 +132,12 @@ if(isset($opts['f']))
 if(isset($opts['d']))
 	$onlydirs = true;
 
-// Reverse array if requested
-if(isset($opts['z']))
-	$files = array_reverse($files);
-
-// Scan path lengths for column spacing
-$maxlen = max(array_map('strlen', array_keys($files)));
+if($files instanceof Generator) {
+	$maxlen = 120;
+} else {
+	// Scan path lengths for column spacing
+	$maxlen = max(array_map('strlen', array_keys($files)));
+}
 
 // Put the cursor back to the start of the line for our actual output
 if(isset($opts['v']))
@@ -152,7 +148,7 @@ foreach($files as $file => $ts) {
 	
 	// Exclude files matching */backups/*.[gz|zip]
 	if(isset($opts['x'])) {
-		if(preg_match('/session\/sess_|\/silverstripe-cache\/|backups\/.*?\.(?:gz|zip|sql)|backups$|logs\/.*?\.log/i', $rfile))
+		if(preg_match('/session\/sess_|\/silverstripe-cache|backups\/.*?\.(?:gz|zip|sql)|backups$|logs\/.*?\.log/i', $rfile))
 			continue;
 	}
 	
@@ -179,10 +175,17 @@ foreach($files as $file => $ts) {
 	}
 }
 
+// If no files were found, clear the output
+if(empty($rfile)) {
+	if(isset($opts['v']))
+		echo "\r" . str_repeat(' ', 80) . "\r";
+}
+
 class FolderHistory {
 	protected $path = '.';
 	protected $type = 'm';	 // ['m', 'r', 'c']
-	protected $sort = 'asc'; // ['asc', 'desc']
+	protected $sort = false;
+	protected $reverseSort = false;
 	protected $scanCallback;
 	
 	const FILE_MODIFIED = 'm';
@@ -209,10 +212,17 @@ class FolderHistory {
 	}
 	
 	/**
-	* Set the sorting mode. Accept asc, desc or null.
+	* Set the sorting mode.
 	**/
 	public function setSort($sort) {
 		$this->sort = $sort;
+	}
+
+	/**
+	* Set the sorting direction.
+	**/
+	public function setReverseSort($reverse) {
+		$this->reverseSort = $reverse;
 	}
 	
 	/**
@@ -222,7 +232,7 @@ class FolderHistory {
 		$this->scanCallback = $callable;
 	}
 	
-	public function listAt($ts) {
+	protected function generateListAt($ts) {
 		$files = array();
 		
 		// Iterate the path structure and collect matching files
@@ -232,35 +242,53 @@ class FolderHistory {
 				$callable($file);
 			}
 			
+			$time = null;
+			
 			try {
 				// Filter and collapse to a path + timestamp based on the selected mode
 				switch($this->type) {
 					case self::FILE_MODIFIED:
 						$time = $obj->getMTime();
-						if($time > $ts)
-							$files[$file] = $time;
 						break;
 					case self::FILE_ACCESSED:
 						$time = $obj->getATime();
-						if($time > $ts)
-							$files[$file] = $time;
 						break;
 					case self::FILE_CREATED:
 						$time = $obj->getCTime();
-						if($time > $ts)
-							$files[$file] = $time;
 						break;
 				}
 			} catch (RuntimeException $e) {
 				// Read error, ignore
 			}
+			
+			if($time > $ts)
+				yield $file => $time;
+		}
+	}
+	
+	public function listAt($ts) {
+		// Build the list generator
+		$list = $this->generateListAt($ts);
+		
+		// If we don't need to sort, just return it for streaming access
+		if(!$this->sort && !$this->reverseSort)
+			return $list;
+		
+		// If we need to sort it, first copy the data into an array
+		$files = array();
+		foreach($list as $file => $time) {
+			$files[$file] = $time;
 		}
 		
-		// Sort the results if requested
-		if(strtolower($this->sort) == 'asc') {
-			asort($files);
-		} elseif(strtolower($this->sort) == 'desc') {
-			arsort($files);
+		// Now sort the result
+		if($this->sort) {
+			if($this->reverseSort) {
+				asort($files);
+			} else {
+				arsort($files);
+			}
+		} else {
+			krsort($files);
 		}
 		
 		// Return an array of [path] => [stat timestamp]
