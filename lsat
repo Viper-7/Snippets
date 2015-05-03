@@ -44,7 +44,7 @@ if(count($digits) > 0 && !file_exists($digits[0]) && !isset($opts['a']) && !isse
 if(isset($opts['help']) || isset($opts['h'])) {
 	echo "\n";
 	echo "lsat: ls at specified time\n";
-	echo "by Viper-7 <viper7@viper-7.com> for PHP 5.3+\n";
+	echo "by Viper-7 <viper7@viper-7.com> for PHP 5.5+\n";
 	echo "\n";
 	echo "Recursively lists files and folders which have status change times within a specified window\n";
 	echo "\n";
