@@ -2,8 +2,11 @@
 <?php
 /**
 * lsat: ls at a specified time
-* 
+*
 * Shell utility to recursively list files & folders in a path, searching for last modified timestamps within a specified window.
+*
+* Install by copying your to PATH (eg /usr/bin/) and chown to 755
+* Requires PHP 5.5+ CLI
 *
 * @author Viper-7 <viper7@viper-7.com
 * @license Beerware
