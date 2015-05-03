@@ -1,0 +1,118 @@
+#!/usr/bin/env php
+<?php
+// filesystem history view
+
+$opts = getopt('hmacBripf:d:', array('help'));
+
+if(isset($opts['help']) || isset($opts['h'])) {
+	echo "\n";
+	echo "lsat: ls at specified time\n";
+	echo "by Viper-7 <viper7@viper-7.com>\n";
+	echo "\n";
+	echo "Recursively lists files and folders which have status change times within a specified window\n";
+	echo "\n";
+	echo "Usage: lsat [-acBhimr] [-dN] [-fN] [path]\n";
+	echo "\n";
+	echo "-m  : Filter by last modified time\n";
+	echo "-a  : Filter by last accessed time\n";
+	echo "-c  : Filter by inode change time\n";
+	echo "-B  : Filter by creation time (Birth)\n";
+	echo "-r  : Reverse sorting order\n";
+	echo "-i  : Filter to show files only\n";
+	echo "-p  : Filter to show folders only\n";
+	echo "-dN : Filter starting from N days ago (default 1)\n";
+	echo "-fN : Filter from N days after the starting point (default unlimited)\n";
+	echo "-h  : Show this help\n";
+	echo "\n";
+	die();
+}
+
+$path = null;
+foreach(array_slice($argv, 1) as $option) {
+	if($option[0] != '-')
+		$path = $option;
+}
+
+$folder = new FolderHistory($path);
+
+foreach(str_split('macB') as $c) {
+	if(isset($opts[$c])) {
+		$folder->setType($c);
+	}
+}
+
+if(isset($opts['d'])) {
+	$ts = strtotime("-{$opts['d']} days");
+} else {
+	$ts = time() - 86400;
+}
+
+$filter = null;
+if(isset($opts['f'])) {
+	$filter = strtotime("+{$opts['f']} days", $ts);
+}
+
+$files = $folder->listAt($ts);
+usort($files, function($a, $b) use ($path) {
+	return filemtime(trim($a)) - filemtime(trim($b));
+});
+
+$onlydirs = $onlyfiles = false;
+if(isset($opts['i']))
+	$onlyfiles = true;
+if(isset($opts['p']))
+	$onlydirs = true;
+
+if(isset($opts['r']))
+	$files = array_reverse($files);
+
+foreach($files as $file) {
+	$rfile = trim($file);
+	$size = str_pad(number_format(filesize($rfile)/1024, 1) . ' kb', 12, ' ', STR_PAD_LEFT);
+	$modified = date('d-m-Y h:i:s', filemtime($rfile));
+	if((!$onlydirs || is_dir($rfile)) &&
+	   (!$onlyfiles || !is_dir($rfile)) &&
+	   (!$filter || filemtime($rfile) < $filter))
+		echo "{$file}\t{$size}\t{$modified}\n";
+}
+
+class FolderHistory {
+	protected $path = '.';
+	protected $type = 'm';
+	
+	const LAST_MODIFIED = 'm';
+	const LAST_ACCESSED = 'a';
+	const CHANGED = 'c';
+	const CREATED = 'B';
+	
+	public function __construct($path = null) {
+		if($path) {
+			$rpath = realpath($path);
+			
+			if(!$rpath)
+				throw new Exception('Invalid path: ' . $path);
+			
+			$this->path = $path;
+		}
+	}
+	
+	public function setType($type) {
+		$this->type = $type;
+	}
+	
+	public function listAt($ts) {
+		if(PHP_OS == 'Linux') {
+			exec("find {$this->path} -newer{$this->type}t @{$ts}", $output);
+			$maxlen = max(array_map('strlen', $output));
+			foreach($output as $k => $v) {
+				if(trim($v, "/ ."))
+					$output[$k] = str_pad(preg_replace('/^\.\//','',$v), $maxlen, ' ', STR_PAD_RIGHT);
+				else
+					unset($output[$k]);
+			}
+			
+			return $output;
+		}
+	}
+}
+
