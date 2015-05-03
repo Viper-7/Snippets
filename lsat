@@ -153,6 +153,7 @@ if(isset($opts['d']))
 if(isset($opts['v']))
 	echo "\r";
 
+$maxlen = 0;
 $toshow = array();
 foreach($files as $file => $ts) {
 	$rfile = trim($file);
@@ -186,7 +187,10 @@ foreach($files as $file => $ts) {
 	   (!$filter || $ts < $filter)) {
 		if($files instanceof Generator) {
 			$file = str_pad(preg_replace('/^\.\//','',$file), 80, ' ', STR_PAD_RIGHT);
-			echo "{$file}\t{$perms}\t{$size}\t{$stat}\n";
+			if($perms)
+				echo "{$file}\t{$perms}\t{$size}\t{$stat}\n";
+			else
+				echo "{$file}\t{$size}\t{$stat}\n";
 		} else {
 			$toshow[] = array($file, $perms, $size, $stat);
 			if(strlen($file) > $maxlen) $maxlen = strlen($file);
