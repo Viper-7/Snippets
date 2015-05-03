@@ -15,7 +15,10 @@ $filter = $path = null;
 $onlydirs = $onlyfiles = false;
 
 // Decode the command line arguments
-$opts = getopt('hmrcszfdvxb:a:', array('help'));
+$opts = getopt('Hhmrcszfdvxb:a:', array('help'));
+
+if(isset($opts['H']))
+	echo '<pre>';
 
 // Parse the path component from the command line too
 $extras = array();
@@ -146,17 +149,11 @@ if(isset($opts['f']))
 if(isset($opts['d']))
 	$onlydirs = true;
 
-if($files instanceof Generator) {
-	$maxlen = 120;
-} else {
-	// Scan path lengths for column spacing
-	$maxlen = max(array_map('strlen', array_keys($files)));
-}
-
 // Put the cursor back to the start of the line for our actual output
 if(isset($opts['v']))
 	echo "\r";
 
+$toshow = array();
 foreach($files as $file => $ts) {
 	$rfile = trim($file);
 	
@@ -166,9 +163,8 @@ foreach($files as $file => $ts) {
 			continue;
 	}
 	
-	// Pad the filename out to the max width for the column
-	$file = str_pad(preg_replace('/^\.\//','',$file), $maxlen, ' ', STR_PAD_RIGHT);
-	
+	$file = preg_replace('/^\.[\/\\\\]/','',$file);
+
 	if(is_dir($rfile))
 		// Directory flag
 		$size = str_pad('', 12, ' ', STR_PAD_LEFT);
@@ -179,14 +175,33 @@ foreach($files as $file => $ts) {
 	// Format the stat timestamp
 	$stat = date('d-m-Y h:i:s', $ts);
 	
-	$perms = getperms($rfile);
+	if(PHP_OS == 'Linux')
+		$perms = getperms($rfile);
+	else
+		$perms = '';
 	
 	// If the file should be shown, show it!
 	if((!$onlydirs || is_dir($rfile)) &&
 	   (!$onlyfiles || !is_dir($rfile)) &&
 	   (!$filter || $ts < $filter)) {
-		echo "{$file}\t{$perms}\t{$size}\t{$stat}\n";
+		if($files instanceof Generator) {
+			$file = str_pad(preg_replace('/^\.\//','',$file), 80, ' ', STR_PAD_RIGHT);
+			echo "{$file}\t{$perms}\t{$size}\t{$stat}\n";
+		} else {
+			$toshow[] = array($file, $perms, $size, $stat);
+			if(strlen($file) > $maxlen) $maxlen = strlen($file);
+		}
 	}
+}
+
+foreach($toshow as list($file, $perms, $size, $stat)) {
+	// Pad the filename out to the max width for the column
+	$file = str_pad($file, $maxlen, ' ', STR_PAD_RIGHT);
+	
+	if($perms) 
+		echo "{$file}\t{$perms}\t{$size}\t{$stat}\n";
+	else
+		echo "{$file}\t{$size}\t{$stat}\n";
 }
 
 // If no files were found, clear the output
