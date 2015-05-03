@@ -27,7 +27,7 @@ foreach(array_slice($argv, 1) as $option) {
 // Decode the path name from extra short-hand number components
 $digits = array_filter($extras, 'ctype_digit');
 if(count($digits) + 1 == count($extras)) {
-	list($path) = array_diff($extras, $digits);
+	list($path) = array_values(array_diff($extras, $digits));
 }
 
 // Support shorthand syntax:
