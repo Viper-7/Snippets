@@ -152,7 +152,7 @@ foreach($files as $file => $ts) {
 	
 	// Exclude files matching */backups/*.[gz|zip]
 	if(isset($opts['x'])) {
-		if(preg_match('/backups\/.*?\.(?:gz|zip|sql)|backups$|logs\/.*?\.log/i', $rfile))
+		if(preg_match('/session\/sess_|\/silverstripe_cache\/|backups\/.*?\.(?:gz|zip|sql)|backups$|logs\/.*?\.log/i', $rfile))
 			continue;
 	}
 	
