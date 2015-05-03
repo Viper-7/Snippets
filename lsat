@@ -4,7 +4,7 @@ $filter = $path = null;
 $onlydirs = $onlyfiles = false;
 
 // Decode the command line arguments
-$opts = getopt('hmrcszfdvxb:a:', array('help'));
+$opts = getopt('hmrcnzfdvxb:a:', array('help'));
 
 // Parse the path component from the command line too
 $extras = array();
@@ -36,24 +36,30 @@ if(count($digits) > 0 && !file_exists($digits[0]) && !isset($opts['a']) && !isse
 if(isset($opts['help']) || isset($opts['h'])) {
 	echo "\n";
 	echo "lsat: ls at specified time\n";
-	echo "by Viper-7 <viper7@viper-7.com>\n";
+	echo "by Viper-7 <viper7@viper-7.com> for PHP 5.3+\n";
 	echo "\n";
 	echo "Recursively lists files and folders which have status change times within a specified window\n";
 	echo "\n";
-	echo "Usage: lsat [-mrcszfdvxh] [-bN] [-aN] [path]\n";
 	echo "\n";
-	echo "-m  : Filter by last modified time\n";
-	echo "-r  : Filter by last accessed time\n";
-	echo "-c  : Filter by inode change time\n";
-	echo "-s  : *Don't* sort the results\n";
-	echo "-z  : Reverse sorting order\n";
-	echo "-f  : Filter to show files only\n";
-	echo "-d  : Filter to show folders only\n";
-	echo "-v  : Be verbose (display progress)\n";
-	echo "-x  : Attempt to exclude valid backups\n";
-	echo "-bN : Filter starting from N days ago (default 1)\n";
-	echo "-aN : Filter from N days after the starting point (default unlimited)\n";
-	echo "-h  : Show this help\n";
+	echo "Usage: lsat [-mrcnzfdvxh] [-bN] [-aN] <path>\n";
+	echo "\n";
+	echo "-m  \t\tFilter by last modified time (default)\n";
+	echo "-r  \t\tFilter by last accessed time\n";
+	echo "-c  \t\tFilter by inode change time\n";
+	echo "-n  \t\tDon't sort the results\n";
+	echo "-z  \t\tReverse sorting order\n";
+	echo "-f  \t\tFilter to show files only\n";
+	echo "-d  \t\tFilter to show folders only\n";
+	echo "-v  \t\tBe verbose (display progress)\n";
+	echo "-x  \t\tAttempt to exclude valid backups\n";
+	echo "-bN \t\tFilter starting from N days ago (default 1)\n";
+	echo "-aN \t\tFilter from N days after the starting point (default unlimited)\n";
+	echo "-h  \t\tShow this help\n";
+	echo "\n";
+	echo "Short-hand syntax:\n";
+	echo "\n";
+	echo "lsat 5    \tEquivalent to lsat -xfb5\n";
+	echo "lsat 5 2  \tEquivalent to lsat -xfb5a2\n";
 	echo "\n";
 	die();
 }
@@ -91,7 +97,7 @@ if(isset($opts['a'])) {
 }
 
 // Sort if required
-if(isset($opts['s']))
+if(isset($opts['n']))
 	$folder->setSort(null);
 
 if(isset($opts['v'])) {
