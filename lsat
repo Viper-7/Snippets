@@ -4,12 +4,33 @@ $filter = $path = null;
 $onlydirs = $onlyfiles = false;
 
 // Decode the command line arguments
-$opts = getopt('hmrcszfdb:a:', array('help'));
+$opts = getopt('hmrcszfdvxb:a:', array('help'));
 
 // Parse the path component from the command line too
+$extras = array();
 foreach(array_slice($argv, 1) as $option) {
 	if($option[0] != '-')
-		$path = $option;
+		$extras[] = $option;
+}
+
+// Decode the path name from extra short-hand number components
+$digits = array_filter($extras, 'ctype_digit');
+if(count($digits) + 1 == count($extras)) {
+	list($path) = array_diff($extras, $digits);
+}
+
+// Support shorthand syntax:
+// 'lsat 5' for 'lsat -xfb5'
+// 'lsat 5 2' for 'lsat -xvfb5a2'
+if(count($digits) > 0 && !file_exists($digits[0]) && !isset($opts['a']) && !isset($opts['b'])) {
+	switch(count($digits)) {
+		case 2:
+			$opts['a'] = $digits[1];
+		case 1:
+			$opts['b'] = $digits[0];
+	}
+	
+	$opts += array('x' => '', 'f' => '');
 }
 
 if(isset($opts['help']) || isset($opts['h'])) {
@@ -19,7 +40,7 @@ if(isset($opts['help']) || isset($opts['h'])) {
 	echo "\n";
 	echo "Recursively lists files and folders which have status change times within a specified window\n";
 	echo "\n";
-	echo "Usage: lsat [-mrcszfdvh] [-bN] [-aN] [path]\n";
+	echo "Usage: lsat [-mrcszfdvxh] [-bN] [-aN] [path]\n";
 	echo "\n";
 	echo "-m  : Filter by last modified time\n";
 	echo "-r  : Filter by last accessed time\n";
@@ -29,6 +50,7 @@ if(isset($opts['help']) || isset($opts['h'])) {
 	echo "-f  : Filter to show files only\n";
 	echo "-d  : Filter to show folders only\n";
 	echo "-v  : Be verbose (display progress)\n";
+	echo "-x  : Attempt to exclude valid backups\n";
 	echo "-bN : Filter starting from N days ago (default 1)\n";
 	echo "-aN : Filter from N days after the starting point (default unlimited)\n";
 	echo "-h  : Show this help\n";
@@ -113,6 +135,12 @@ if(isset($opts['v']))
 
 foreach($files as $file => $ts) {
 	$rfile = trim($file);
+	
+	// Exclude files matching */backups/*.[gz|zip]
+	if(isset($opts['x'])) {
+		if(preg_match('/backups\/.*?\.(?:gz|zip|sql)|backups$|logs\/.*?\.log/i', $rfile))
+			continue;
+	}
 	
 	// Pad the filename out to the max width for the column
 	$file = str_pad(preg_replace('/^\.\//','',$file), $maxlen, ' ', STR_PAD_RIGHT);
