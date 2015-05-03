@@ -1,33 +1,10 @@
 #!/usr/bin/env php
 <?php
-if(isset($opts['help']) || isset($opts['h'])) {
-	echo "\n";
-	echo "lsat: ls at specified time\n";
-	echo "by Viper-7 <viper7@viper-7.com>\n";
-	echo "\n";
-	echo "Recursively lists files and folders which have status change times within a specified window\n";
-	echo "\n";
-	echo "Usage: lsat [-acmiprsh] [-dN] [-fN] [path]\n";
-	echo "\n";
-	echo "-m  : Filter by last modified time\n";
-	echo "-a  : Filter by last accessed time\n";
-	echo "-c  : Filter by file creation time\n";
-	echo "-s  : *Don't* sort the results\n";
-	echo "-r  : Reverse sorting order\n";
-	echo "-f  : Filter to show files only\n";
-	echo "-d  : Filter to show folders only\n";
-	echo "-bN : Filter starting from N days ago (default 1)\n";
-	echo "-aN : Filter from N days after the starting point (default unlimited)\n";
-	echo "-h  : Show this help\n";
-	echo "\n";
-	die();
-}
-
 $filter = $path = null;
 $onlydirs = $onlyfiles = false;
 
 // Decode the command line arguments
-$opts = getopt('hmacsrfdb:a:', array('help'));
+$opts = getopt('hmrcszfdb:a:', array('help'));
 
 // Parse the path component from the command line too
 foreach(array_slice($argv, 1) as $option) {
@@ -35,10 +12,45 @@ foreach(array_slice($argv, 1) as $option) {
 		$path = $option;
 }
 
-$folder = new FolderHistory($path);
+if(isset($opts['help']) || isset($opts['h'])) {
+	echo "\n";
+	echo "lsat: ls at specified time\n";
+	echo "by Viper-7 <viper7@viper-7.com>\n";
+	echo "\n";
+	echo "Recursively lists files and folders which have status change times within a specified window\n";
+	echo "\n";
+	echo "Usage: lsat [-mrcszfdvh] [-bN] [-aN] [path]\n";
+	echo "\n";
+	echo "-m  : Filter by last modified time\n";
+	echo "-r  : Filter by last accessed time\n";
+	echo "-c  : Filter by inode change time\n";
+	echo "-s  : *Don't* sort the results\n";
+	echo "-z  : Reverse sorting order\n";
+	echo "-f  : Filter to show files only\n";
+	echo "-d  : Filter to show folders only\n";
+	echo "-v  : Be verbose (display progress)\n";
+	echo "-bN : Filter starting from N days ago (default 1)\n";
+	echo "-aN : Filter from N days after the starting point (default unlimited)\n";
+	echo "-h  : Show this help\n";
+	echo "\n";
+	die();
+}
+
+if(isset($opts['v']))
+	echo "Working...";
+
+try {
+	$folder = new FolderHistory($path);
+} catch(Exception $e) {
+	if(isset($opts['v']))
+		echo "\r";
+
+	echo $e->getMessage() . "\n";
+	exit(1);
+}
 
 // Set filter mode
-foreach(str_split('mac') as $c) {
+foreach(str_split('mrc') as $c) {
 	if(isset($opts[$c])) {
 		$folder->setType($c);
 	}
@@ -57,11 +69,28 @@ if(isset($opts['a'])) {
 }
 
 // Sort if required
-if(!isset($opts['s']))
-	$folder->sort = 'asc';
+if(isset($opts['s']))
+	$folder->setSort(null);
 
+if(isset($opts['v'])) {
+	$folder->setScanCallback(function($path) {
+		if(substr($path, 0, 2) == './') $path = substr($path, 2);
+		$path = preg_replace('/[^a-zA-Z0-9_\.\/-]+/', '', $path);
+		if(strlen($path) > 71) $path = substr($path,0,68) . '...';
+		echo str_pad("\rScanning {$path}", 80, ' ', STR_PAD_LEFT);
+	});
+}
+	
 // Fetch the file list
 $files = $folder->listAt($ts);
+
+// If no files were found, clear the output and end
+if(!$files) {
+	if(isset($opts['v']))
+		echo "\r" . str_repeat(' ', 90) . "\r";
+	
+	die();
+}
 
 // Filter to files
 if(isset($opts['f']))
@@ -72,11 +101,15 @@ if(isset($opts['d']))
 	$onlydirs = true;
 
 // Reverse array if requested
-if(isset($opts['r']))
+if(isset($opts['z']))
 	$files = array_reverse($files);
 
 // Scan path lengths for column spacing
-$maxlen = max(array_map('strlen', $files));
+$maxlen = max(array_map('strlen', array_keys($files)));
+
+// Put the cursor back to the start of the line for our actual output
+if(isset($opts['v']))
+	echo "\r";
 
 foreach($files as $file => $ts) {
 	$rfile = trim($file);
@@ -84,30 +117,34 @@ foreach($files as $file => $ts) {
 	// Pad the filename out to the max width for the column
 	$file = str_pad(preg_replace('/^\.\//','',$file), $maxlen, ' ', STR_PAD_RIGHT);
 	
-	// File size in kilobytes
-	$size = str_pad(number_format(filesize($rfile)/1024, 1) . ' kb', 12, ' ', STR_PAD_LEFT);
+	if(is_dir($rfile))
+		// Directory flag
+		$size = str_pad('', 12, ' ', STR_PAD_LEFT);
+	else
+		// File size in kilobytes
+		$size = str_pad(number_format(filesize($rfile)/1024, 1) . ' kb', 12, ' ', STR_PAD_LEFT);
 	
 	// Format the stat timestamp
-	$modified = date('d-m-Y h:i:s', $ts);
+	$stat = date('d-m-Y h:i:s', $ts);
+	
+	$perms = getperms($rfile);
 	
 	// If the file should be shown, show it!
 	if((!$onlydirs || is_dir($rfile)) &&
 	   (!$onlyfiles || !is_dir($rfile)) &&
 	   (!$filter || $ts < $filter)) {
-		echo "{$file}\t{$size}\t{$modified}\n";
-		
-		// Push the output to the screen immediately
-		flush();
+		echo "{$file}\t{$perms}\t{$size}\t{$stat}\n";
 	}
 }
 
 class FolderHistory {
 	protected $path = '.';
-	protected $type = 'm';	 // ['m', 'a', 'c']
+	protected $type = 'm';	 // ['m', 'r', 'c']
 	protected $sort = 'asc'; // ['asc', 'desc']
+	protected $scanCallback;
 	
 	const FILE_MODIFIED = 'm';
-	const FILE_ACCESSED = 'a';
+	const FILE_ACCESSED = 'r';
 	const FILE_CREATED = 'c';
 	
 	public function __construct($path = null) {
@@ -129,28 +166,51 @@ class FolderHistory {
 		$this->type = $type;
 	}
 	
+	/**
+	* Set the sorting mode. Accept asc, desc or null.
+	**/
+	public function setSort($sort) {
+		$this->sort = $sort;
+	}
+	
+	/**
+	* Set a callback for the scanner to invoke as it passes over the structure
+	**/
+	public function setScanCallback($callable) {
+		$this->scanCallback = $callable;
+	}
+	
 	public function listAt($ts) {
+		$files = array();
+		
 		// Iterate the path structure and collect matching files
-		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path)) as $file) {
-			// ignore . and .. even in subfolders
-			if(trim($v, "/ .")) {
+		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST) as $file => $obj) {
+			if(isset($this->scanCallback)) {
+				$callable = $this->scanCallback;
+				$callable($file);
+			}
+			
+			try {
+				// Filter and collapse to a path + timestamp based on the selected mode
 				switch($this->type) {
 					case self::FILE_MODIFIED:
-						$time = filemtime($file);
+						$time = $obj->getMTime();
 						if($time > $ts)
 							$files[$file] = $time;
 						break;
 					case self::FILE_ACCESSED:
-						$time = fileatime($file);
+						$time = $obj->getATime();
 						if($time > $ts)
 							$files[$file] = $time;
 						break;
 					case self::FILE_CREATED:
-						$time = filectime($file);
+						$time = $obj->getCTime();
 						if($time > $ts)
 							$files[$file] = $time;
 						break;
 				}
+			} catch (RuntimeException $e) {
+				// Read error, ignore
 			}
 		}
 		
@@ -162,7 +222,60 @@ class FolderHistory {
 		}
 		
 		// Return an array of [path] => [stat timestamp]
-		return $files
+		return $files;
 	}
 }
 
+// Taken from php.net comments
+function getperms($file) {
+	$perms = fileperms($file);
+
+	if (($perms & 0xC000) == 0xC000) {
+		// Socket
+		$info = 's';
+	} elseif (($perms & 0xA000) == 0xA000) {
+		// Symbolic Link
+		$info = 'l';
+	} elseif (($perms & 0x8000) == 0x8000) {
+		// Regular
+		$info = '-';
+	} elseif (($perms & 0x6000) == 0x6000) {
+		// Block special
+		$info = 'b';
+	} elseif (($perms & 0x4000) == 0x4000) {
+		// Directory
+		$info = 'd';
+	} elseif (($perms & 0x2000) == 0x2000) {
+		// Character special
+		$info = 'c';
+	} elseif (($perms & 0x1000) == 0x1000) {
+		// FIFO pipe
+		$info = 'p';
+	} else {
+		// Unknown
+		$info = 'u';
+	}
+
+	// Owner
+	$info .= (($perms & 0x0100) ? 'r' : '-');
+	$info .= (($perms & 0x0080) ? 'w' : '-');
+	$info .= (($perms & 0x0040) ?
+				(($perms & 0x0800) ? 's' : 'x' ) :
+				(($perms & 0x0800) ? 'S' : '-'));
+
+	// Group
+	$info .= (($perms & 0x0020) ? 'r' : '-');
+	$info .= (($perms & 0x0010) ? 'w' : '-');
+	$info .= (($perms & 0x0008) ?
+				(($perms & 0x0400) ? 's' : 'x' ) :
+				(($perms & 0x0400) ? 'S' : '-'));
+
+	// World
+	$info .= (($perms & 0x0004) ? 'r' : '-');
+	$info .= (($perms & 0x0002) ? 'w' : '-');
+	$info .= (($perms & 0x0001) ?
+				(($perms & 0x0200) ? 't' : 'x' ) :
+				(($perms & 0x0200) ? 'T' : '-'));
+				
+	return $info;
+}
