@@ -1,5 +1,13 @@
 #!/usr/bin/env php
 <?php
+/**
+* lsat: ls at a specified time
+* 
+* Shell utility to recursively list files & folders in a path, searching for last modified timestamps within a specified window.
+*
+* @author Viper-7 <viper7@viper-7.com
+* @license Beerware
+**/
 $filter = $path = null;
 $onlydirs = $onlyfiles = false;
 
