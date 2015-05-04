@@ -28,7 +28,7 @@ foreach(array_slice($argv, 1) as $option) {
 }
 
 // Decode the path name from extra short-hand number components
-$digits = array_filter($extras, 'ctype_digit');
+$digits = array_filter($extras, function ($a) { return preg_match('/^[0-9]+(?:[ymwdhms])?$/', $a); });
 if(count($digits) + 1 == count($extras)) {
 	list($path) = array_values(array_diff($extras, $digits));
 }
@@ -48,7 +48,7 @@ if(count($digits) > 0 && !file_exists($digits[0]) && !isset($opts['a']) && !isse
 }
 
 if(isset($opts['help']) || isset($opts['h'])) {
-	echo "Usage: lsat [-mrcszfdvxh] [-bN] [-aN] <path>\n";
+	echo "Usage: lsat [-mrcszfdvxh] [-bN[ymwdhms]] [-aN[ymwdhms]] <path>\n";
 	echo "Recursively lists files and folders which have status change times within a specified window\n";
 	echo "\n";
 	echo "-m  \tFilter by last modified time (default)\n";
@@ -106,14 +106,14 @@ foreach(str_split('mrc') as $c) {
 
 // Generate timestamp for days ago filter
 if(isset($opts['b'])) {
-	$ts = strtotime("-{$opts['b']} days");
+	$ts = strtotime('-' . getduration($opts['b']));
 } else {
 	$ts = time() - 86400;
 }
 
 // Generate timestamp for days since filter
 if(isset($opts['a'])) {
-	$filter = strtotime("+{$opts['a']} days", $ts);
+	$filter = strtotime('+' . getduration($opts['a']), $ts);
 }
 
 // Sort if required
@@ -267,36 +267,58 @@ class FolderHistory {
 	
 	protected function generateListAt($ts) {
 		$files = array();
+		$stack = array();
 		
-		// Iterate the path structure and collect matching files
-		foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->path, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST) as $file => $obj) {
-			if(isset($this->scanCallback)) {
-				$callable = $this->scanCallback;
-				$callable($file);
+		$path = rtrim($this->path, '/\\');
+		$stack[$path] = opendir($path);
+		while($stack) {
+			$ret = readdir(end($stack));
+			
+			if($ret == '.' || $ret == '..') continue;
+			
+			if($ret === false) {
+				$dp = array_pop($stack);
+				closedir($dp);
+				unset($dp);
+				continue;
 			}
 			
-			$time = null;
+			end($stack);
+			$container = key($stack);
 			
-			try {
-				// Filter and collapse to a path + timestamp based on the selected mode
-				switch($this->type) {
-					case self::FILE_MODIFIED:
-						$time = $obj->getMTime();
-						break;
-					case self::FILE_ACCESSED:
-						$time = $obj->getATime();
-						break;
-					case self::FILE_CREATED:
-						$time = $obj->getCTime();
-						break;
-				}
-			} catch (RuntimeException $e) {
-				// Read error, ignore
+			$file = "{$container}/{$ret}";
+			
+			if(is_dir($file)) {
+				$dp = @opendir($file);
+				
+				if($dp)
+					$stack[$file] = $dp;
+			}
+			
+			if(isset($this->scanCallback)) {
+				$callable = $this->scanCallback;
+				$ret = $callable($file);
+				
+				if($ret === FALSE)
+					continue;
+			}
+			
+			switch($this->type) {
+				case self::FILE_MODIFIED:
+					$time = @filemtime($file);
+					break;
+				case self::FILE_ACCESSED:
+					$time = @fileatime($file);
+					break;
+				case self::FILE_CREATED:
+					$time = @filectime($file);
+					break;
 			}
 			
 			if($time > $ts)
 				yield $file => $time;
 		}
+		
 	}
 	
 	public function listAt($ts) {
@@ -381,4 +403,27 @@ function getperms($file) {
 				(($perms & 0x0200) ? 'T' : '-'));
 				
 	return $info;
+}
+
+function getduration($dur) {
+	$dur = trim($dur);
+
+	if(!empty($dur) && !ctype_digit($dur)) {
+		$last = substr($dur, -1);
+		$dur = substr($dur, 0, -1);
+	} else {
+		$last = 'd';
+	}
+	
+	$dur = intval(trim($dur));
+	
+	switch($last) {
+		case 'y': return "{$dur} years";
+		case 'm': return "{$dur} months";
+		case 'w': return "{$dur} weeks";
+		case 'h': return "{$dur} hours";
+		case 's': return "{$dur} seconds";
+		default:
+		case 'd': return "{$dur} days";
+	}
 }
